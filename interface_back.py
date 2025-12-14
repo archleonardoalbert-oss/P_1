@@ -1,0 +1,34 @@
+import json
+import events
+import validation_class
+
+new_refresh = True
+
+resources = {}
+collitions = {}
+
+def Refresh_data_base(events, collitions, resources, date_interval):
+    info = {
+        "events" : events,
+        "collitions" : collitions,
+        "resources" : resources,
+        "date_interval" : date_interval
+    }
+
+    with open("Database.json", "w", encoding= "utf-8") as file:
+        json.dump(info, file, indent= 4) #json.dump(datos, file, indent = 4) ident = 4 -> autoformater
+
+    
+
+
+    new_refresh = True
+
+
+def Load_date_base(element):
+    if new_refresh:
+        with open("Database.json", "r", encoding = "utf-8") as file:
+            datos_leidos = json.load(file) #json.load() construye una estructura de python
+
+    new_refresh = False
+
+    return datos_leidos[element]
