@@ -4,8 +4,17 @@ import validation_class
 
 new_refresh = True
 
-resources = {}
-collitions = {}
+resources = {
+             "mesas" : 4,
+             "sillas" : 12,
+             "organizador" : 15,
+             "comida" : 10000
+}
+collitions = {
+            "mesas" : ('mesas'),
+            "sillas" : ('sillas'),
+            "organizador" : ('organizador')
+}
 
 def Refresh_data_base(events, collitions, resources, date_interval):
     info = {
