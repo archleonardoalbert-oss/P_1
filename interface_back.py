@@ -1,6 +1,6 @@
 import json
 import events
-import validation_class
+
 
 new_refresh = True
 
@@ -33,11 +33,11 @@ def Refresh_data_base(events, collitions, resources, date_interval):
     new_refresh = True
 
 
-def Load_date_base(element):
+def Load_date_base(element): #elements da indicaciones para decidir lo que voy a importar concretamente
     if new_refresh:
         with open("Database.json", "r", encoding = "utf-8") as file:
             datos_leidos = json.load(file) #json.load() construye una estructura de python
 
-    new_refresh = False
+        new_refresh = False
 
-    return datos_leidos[element]
+        return datos_leidos[element]

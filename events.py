@@ -1,8 +1,8 @@
-import abc
+from abc import ABC
 from abc import abstractclassmethod
 
-class Event(abc):
-    def __inti__(self, start_date, end_date, depen, resources, name):
+class Event(ABC):
+    def __init__(self, start_date, end_date, depen, resources, name):
         self.name = name
         self.start_date = start_date
         self.end_date = end_date
@@ -13,7 +13,7 @@ class Event(abc):
         info = {
             "start_date" : self.start_date,
             "end_date" : self.end_date,
-            "depem" : self.depen,
+            "depen" : self.depen,
             "resources" : self.resources 
         }
 
@@ -27,7 +27,7 @@ class Espectaculo_Humoristico(Event):
     pass
 
 class Evento_Cultural(Event):
-    depen = ["mesas", "sillas", "organizadpr"]
+    depen = ["mesas", "sillas", "organizador"]
     name = 'Evento Cultural'
     pass
 
