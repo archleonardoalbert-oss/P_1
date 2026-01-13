@@ -1,6 +1,8 @@
 import json
 import events
 from datetime import datetime as date
+from dependencias import *
+import ulid
 
 
 class Validation(): 
@@ -26,19 +28,23 @@ class Validation():
         all_events = Load_date_base("events")
         all_resources = Load_date_base("resources")
         result = True
-        f = "%Y/%m/%d"
+        f = "%d/%m/%Y"
 
-        for event in all_events:
-            #Los intervalos de ocurrencia de los eventos tienen alguna interseccion
-            start_date_intersection = date.strptime(event['start_date'], f) <= date.strptime(self.s_d, f) <= date.strptime(event['end_date'], f)
-            end_date_intersection = date.strptime(event['start_date'], f) <= date.strptime(self.e_d, f) <= date.strptime(event['end_date'], f)
-            if start_date_intersection or end_date_intersection:
-                for resource in event['resources']:
-                    all_resources[resource] -= 1 
+        try:
+            for event in all_events:
+                #Los intervalos de ocurrencia de los eventos tienen alguna interseccion
+                start_date_intersection = date.strptime(event['start_date'], f) <= date.strptime(self.s_d, f) <= date.strptime(event['end_date'], f)
+                end_date_intersection = date.strptime(event['start_date'], f) <= date.strptime(self.e_d, f) <= date.strptime(event['end_date'], f)
+                if start_date_intersection or end_date_intersection:
+                    for resource in event['resources']:
+                        all_resources[resource] -= 1 
+        
+        except ValueError:
+            return (False, [])
         
         mistake = []
-        for r in self.depe:
-            if all_resources[r] == 0:
+        for r in self.resources:
+            if all_resources[r] <= 0:
                 result = False
                 mistake.append(r)
         
@@ -60,7 +66,7 @@ class Validation():
         
         return (result, mistake)
 
-    def Check_r_d(self, formate = "%Y/%m/%d") -> bool:
+    def Check_r_d(self, formate = "%d/%m/%Y") -> bool:
         "Verifica si el intervalo de la fecha del evento es valido"
 
         try:
@@ -118,28 +124,70 @@ resources = {
              "mesas" : 4,
              "sillas" : 12,
              "organizador" : 15,
-             "comida" : 10000
+             "comida" : 10000,
+             "prostitutas" : 73,        #TENGO QUE HACER UNA IMPLEMENTACION PARA GASTAR MAS DE UN RECURSO A LA VEZ
+             "guardias" : 35,
+             "ingenieros" : 12,
+             "ciberneticos" : 20,
+             "USD" : 20000000
 }
 collitions = {
-            "mesas" : ('mesas'),
-            "sillas" : ('sillas'),
-            "organizador" : ('organizador'),
-            "comida" : ('comida')
+            "mesas" : (),
+            "sillas" : (),
+            "organizador" : ('ingenieros', 'prostitutas'),          #TENGO QUE IMPLEMENTAR UN MECANISMO PARA QUE UNOS RECURSOS DEPENDAN DE OTROS
+            "comida" : (),
+            "prostitutas" : ('ingenieros', 'ciberneticos'),
+            "guardias" : (),
+            "ingenieros" : (),
+            "ciberneticos" : ('ingenieros'),
+            "USD" : ()
 }
 
 def Refresh_data_base(event):
     events = Load_date_base('events')
-    events.append(event.__dict__)
+    event_dict = event.__dict__
+    event_dict.update({"id" : str(ulid.new())})
+    events.append(event_dict)
     info = {
         "collitions" : collitions,
         "resources" : resources,
         "events" : events
     }
+    
 
     with open("Database.json", "w", encoding= "utf-8") as file:
         json.dump(info, file, indent= 4) #json.dump(datos, file, indent = 4) ident = 4 -> autoformater
 
-    
+def Refresh_visualization():
+    events = Load_date_base('events')
+    colors = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF']
+    processed_events = []
+
+    for i in range(len(events)):
+        event = events[i]
+        #Procesamiento de fechas
+        f_start_date = event['start_date'].split('/')
+        f_end_date = event['end_date'].split('/')
+        for date in [f_start_date, f_end_date]:
+            if len(date[0]) == 1:
+                date[0] = '0' + date[0]
+            
+            if len(date[1]) == 1:
+                date[1] = '0' + date[1]
+            
+            date[0], date[2] = date[2], date[0]
+
+
+        f_start_date = '-'.join(f_start_date)
+        f_end_date[2] = str(int(f_end_date[2]) + 1)
+        f_end_date = '-'.join(f_end_date)
+
+        color = colors[i % len(colors)] #Asignandole un color al evento
+
+        processed_events.append({'title': event['name'], 'start': f_start_date, 'end': f_end_date, 'color': color })
+
+    return processed_events
+
 
 def Load_date_base(element): #elements da indicaciones para decidir lo que voy a importar concretamente
     with open("Database.json", "r", encoding = "utf-8") as file:
@@ -149,11 +197,13 @@ def Load_date_base(element): #elements da indicaciones para decidir lo que voy a
 
 
 
-def Try_event(event_type: str, start_date: str, end_date: str, resources: list) -> bool:
-    validation = Validation(start_date, end_date, ["mesas", "sillas", "organizador"], resources) #Tengo que implementar un mecanismo para manejar dinamicamente las dependencias
-    event_details = validation.Details()
-    if event_details[-1]:
-        obj = events.Espectaculo_Humoristico(start_date, end_date, resources)
-        Refresh_data_base(obj)
+def Try_event(event_type: str, start_date: str, end_date: str, resources: list,  depen: list) -> bool:
+    if event_type == 'Espectaculo Humoristico':
+        validation = Validation(start_date, end_date, E_h_depe, resources)
+    
+    elif event_type == 'Evento Cultural':
+        validation = Validation(start_date, end_date, E_c_depe, resources)
 
-    return event_details
+    elif event_type == 'Personalizado':
+        validation = Validation(start_date, end_date, depen, resources)
+    return validation.Details()

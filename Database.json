@@ -1,211 +1,51 @@
 {
     "collitions": {
-        "mesas": "mesas",
-        "sillas": "sillas",
-        "organizador": "organizador",
-        "comida": "comida"
+        "mesas": [],
+        "sillas": [],
+        "organizador": [
+            "ingenieros",
+            "prostitutas"
+        ],
+        "comida": [],
+        "prostitutas": [
+            "ingenieros",
+            "ciberneticos"
+        ],
+        "guardias": [],
+        "ingenieros": [],
+        "ciberneticos": "ingenieros",
+        "USD": []
     },
     "resources": {
         "mesas": 4,
         "sillas": 12,
         "organizador": 15,
-        "comida": 10000
+        "comida": 10000,
+        "prostitutas": 73,
+        "guardias": 35,
+        "ingenieros": 12,
+        "ciberneticos": 20,
+        "USD": 20000000
     },
     "events": [
         {
-            "name": "Espectaculo Humoristico",
-            "start_date": "2026/1/9",
-            "end_date": "2026/1/13",
+            "name": "Locura",
+            "start_date": "10/1/2026",
+            "end_date": "12/1/2026",
             "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
+                "comida",
+                "prostitutas",
+                "USD"
             ],
             "resources": [
                 "mesas",
                 "sillas",
-                "organizador"
-            ]
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "2026/1/13",
-            "end_date": "2026/1/9",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
+                "prostitutas",
+                "guardias",
+                "USD",
+                "comida"
             ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ]
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "2026/2/10",
-            "end_date": "2026/2/14",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ]
-        },
-        {
-            "name": "Evento Cultural",
-            "start_date": "2026/2/10",
-            "end_date": "2026/2/14",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ]
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "2026/1/9",
-            "end_date": "2026/2/14",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ]
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "2026/1/9",
-            "end_date": "2026/2/14",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ]
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "2026/1/7",
-            "end_date": "2026/2/14",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ]
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "2026/1/8",
-            "end_date": "2026/2/14",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ]
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "2026/1/8",
-            "end_date": "2026/2/14",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ]
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "2026/1/9",
-            "end_date": "2026/2/14",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ]
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "2026/1/9",
-            "end_date": "2026/2/14",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ]
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "2026/1/9",
-            "end_date": "2026/2/14",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ]
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "2026/1/9",
-            "end_date": "2026/2/14",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ]
+            "id": "01KEGJ4BNRS2TM0346PCK0JYS2"
         }
     ]
 }

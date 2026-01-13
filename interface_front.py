@@ -88,7 +88,7 @@ def Administrar():
                 depe = st.multiselect('Que recursos necesita tu evento ?', options= total_resources)
             
             if st.button('Save'):
-                validation = interface_back.Try_event(event_type, start_date, end_date, selected_resources)
+                validation = interface_back.Try_event(event_type, start_date, end_date, selected_resources, depe)
                 
                 onj = None
 
@@ -97,12 +97,19 @@ def Administrar():
                         obj = events.Espectaculo_Humoristico(start_date, end_date, selected_resources)
                     elif event_type == e2:
                         obj = events.Evento_Cultural(start_date, end_date, selected_resources)
+                    elif event_type == e3:
+                        obj = events.Evento_Personalizado(start_date, end_date, selected_resources, depe, name)
                     
                     interface_back.Refresh_data_base(obj)
                     st.success('Evento agregado exitosamente')
                 
                 else:
-                    st.error(f'Ha ocurrido un error: {validation[:len(validation)-1]}')
+                    st.error(f'''Ha ocurrido un error: 
+
+                    
+                    -Recursos minimos necesarios: {validation[0]}\n\r
+                    -Coliciones entre recursos: {validation[1]}\n\r
+                    -Validez de intervalo: {validation[3]}''')
 
 
         #Eliminar
@@ -121,15 +128,9 @@ def Administrar():
 
 def Visualizacion():
     st.header('Visualizacion')
-    st.markdown("""
-    En esta seccion podras ver los eventos que hay en curso y algunos detalles de los mismos
-    """)
 
     #Eventos que se visualizaran en el calendario
-    events = [
-        #{'title': 'Evento_n', 'start': fecha_de_inicio, 'end': fecha_de_fin}
-        #interface_back.Load_date_base('events') -> retorna los eventos
-    ]
+    events = interface_back.Refresh_visualization()
 
     calendar_options = {
         'initialView': 'dayGridMonth',  # Vista de cuadricula mensual
@@ -138,12 +139,16 @@ def Visualizacion():
         'center': 'title',  # Titulo del mes/anio en el centro
         'right': 'today'    # Boton para ir a la fecha actual
         },
-        'locale': 'es' #Idioma
+        'locale': 'es', #Idioma
+        'height': '650px' #Altura
     }
 
     selected = cal(events= events, options= calendar_options)
     st.subheader('Eventos asignados')
     #Mostrar los eventos actuales 
+    st.markdown('Color - Nombre - Fecha(anio-mes-dia)')
+    for event in events:
+        st.markdown(f'<div style="display:inline-block; width:20px; height:20px; background-color:{event["color"]}; border:1px solid black; margin-right:10px;"></div> {event["title"]}: {event["start"]}', unsafe_allow_html=True)
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------
 

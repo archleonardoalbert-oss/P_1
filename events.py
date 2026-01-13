@@ -1,5 +1,6 @@
 from abc import ABC
 from abc import abstractclassmethod
+from dependencias import *
 
 class Event(ABC):
     def __init__(self, start_date, end_date, resources, depen = None, name = None):
@@ -20,21 +21,21 @@ class Event(ABC):
         return f"{info}"
     
 
-#Listo para definir eventos concretos
 class Espectaculo_Humoristico(Event):
-    depend = ["mesas", "sillas", "organizador"]
+    depend = E_h_depe
     nam = 'Espectaculo Humoristico'
     def __init__(self, start_date, end_date, resources, depen = depend, name = nam):
         super().__init__(start_date, end_date, resources, depen, name)
 
 class Evento_Cultural(Event):
-    depend = ["mesas", "sillas", "organizador"]
+    depend = E_c_depe
     nam = 'Evento Cultural'
     def __init__(self, start_date, end_date, resources, depen = depend, name = nam):
         super().__init__(start_date, end_date, resources, depen, name)
 
 class Evento_Personalizado(Event):
-    pass #Se personalizan las dependencias y el nombre
+    def __init__(self, start_date, end_date, resources, depen, name):
+        super().__init__(start_date, end_date, resources, depen, name)
 
 
 
