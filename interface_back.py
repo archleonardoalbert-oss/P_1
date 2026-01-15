@@ -184,7 +184,14 @@ def Refresh_visualization():
 
         color = colors[i % len(colors)] #Asignandole un color al evento
 
-        processed_events.append({'title': event['name'], 'start': f_start_date, 'end': f_end_date, 'color': color })
+        processed_events.append({
+            'title': event['name'],
+            'start': f_start_date,
+            'end': f_end_date,
+            'color': color,
+            'id' : event['id'],
+            'resources' : event['resources'],
+            'depen': event['depen'] })
 
     return processed_events
 

@@ -46,6 +46,26 @@
                 "comida"
             ],
             "id": "01KEGJ4BNRS2TM0346PCK0JYS2"
+        },
+        {
+            "name": "Evento Cultural",
+            "start_date": "15/1/2026",
+            "end_date": "15/1/2026",
+            "depen": [
+                "mesas",
+                "sillas",
+                "organizador",
+                "comida"
+            ],
+            "resources": [
+                "mesas",
+                "sillas",
+                "organizador",
+                "ciberneticos",
+                "USD",
+                "comida"
+            ],
+            "id": "01KEZC2FG4E9AFHXYWKWMXYYRS"
         }
     ]
 }

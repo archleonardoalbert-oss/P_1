@@ -4,6 +4,7 @@ import interface_back
 from interface_back import events
 import json
 import datetime
+import pandas as pd
 
 total_resources = interface_back.resources.keys()
 st.set_page_config(layout= "wide")
@@ -144,11 +145,65 @@ def Visualizacion():
     }
 
     selected = cal(events= events, options= calendar_options)
-    st.subheader('Eventos asignados')
-    #Mostrar los eventos actuales 
-    st.markdown('Color - Nombre - Fecha(anio-mes-dia)')
-    for event in events:
-        st.markdown(f'<div style="display:inline-block; width:20px; height:20px; background-color:{event["color"]}; border:1px solid black; margin-right:10px;"></div> {event["title"]}: {event["start"]}', unsafe_allow_html=True)
+
+    st.subheader('Eventos en curso:')
+    #Detalles de eventos:
+    names = []
+    colors = []
+    dates = []
+    id = []
+
+    for e in events:
+        names.append(e['title'])
+        colors.append(e['color'])
+        dates.append(f'{e['start']} / {e['end']}')
+        id.append(e['id'])
+    
+    #columnas
+    col_left, col_right = st.columns([1, 1], border= True)
+
+    df = pd.DataFrame({
+        'Nombre': names,
+        'Color': colors,
+        'Fecha': dates,
+        'ID': id
+    })
+
+    def Color(value):
+        if isinstance(value, str) and value.startswith("#"):
+            return f'background-color: {value}; color: transparent'
+        
+        return
+
+    df_plus = df.style.applymap(Color, subset=['Color'])
+
+    with col_left: #Tabla
+        data_frame = st.dataframe(
+            df_plus,
+            on_select = 'rerun', #Rerrunea la app al seleccionar
+            selection_mode = 'single-cell', #Modo de seleccion en cuestion de cantidad de celdas
+            use_container_width = True, #Ajusta el ancho del contenedor
+            hide_index = False #Muestra indices si lo necesitas
+            )
+        
+    
+    with col_right:
+        if data_frame and data_frame.selection.cells:
+            row, column = data_frame.selection.cells[0]
+
+            all_row = df.iloc[row]
+            all_row = dict(all_row)
+            for e in events:
+                if e['id'] == all_row['ID']:
+                    all_row.update({
+                        'Recursos' : e['resources'],
+                        'Dependencias' : e['depen']
+                        }
+                    )
+                    break
+
+            st.dataframe(all_row)
+
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------
 
