@@ -40,7 +40,7 @@ class Validation():
                         all_resources[resource] -= 1 
         
         except ValueError:
-            return (False, [])
+            return ("Imposible determinar", [])
         
         mistake = []
         for r in self.resources:
@@ -66,6 +66,22 @@ class Validation():
         
         return (result, mistake)
 
+    def Check_depen_resources(self) -> tuple:
+        "Verifica si todos los recursos que exige el evento son consistentes entre si"
+
+        depen = Load_date_base('depen_resources')
+        mistake_cause = []
+        mistake_reason = []
+        result = True
+        for r in self.resources:
+            for d in depen[r]:
+                if not d in self.resources:
+                    result = False
+                    mistake_cause.append(r)
+                    mistake_reason.append(d)
+
+        return (result, mistake_cause, mistake_reason)
+
     def Check_r_d(self, formate = "%d/%m/%Y") -> bool:
         "Verifica si el intervalo de la fecha del evento es valido"
 
@@ -79,7 +95,7 @@ class Validation():
         except ValueError:
             return False
 
-    def Valid(self, result: tuple) -> bool:
+    def Valid(self, result: list) -> bool:
         "True si el evento es valido, False si no (basandose en las validaciones anteriores)"
 
         for i in result:
@@ -100,17 +116,22 @@ class Validation():
         2) Check_collitions():
                                 - bool de si ninguno de los recursos repele a otro (True) o si existe alguno que lo haga (False)
                                 - lista de tuplas *[(a, b)]* donde *a* y *b* son recursos que se repelen entre si 
-                                    (Si *a* aparece n veces en los recursos del evento (a, b) aparecera n veces en la lista)      
-        3) Check_global_resources():
+                                    (Si *a* aparece n veces en los recursos del evento (a, b) aparecera n veces en la lista) 
+        3) Check_depen_resources():
+                                - bool de si los recursos del evento son consistentes entre si (se respetan las dependencias de los recursos)
+                                - mistake_cause: los recursos los cuales no estan satisfechas sus dependencias
+                                - mistake_reason: los recursos que faltan para satisfacer las dependencias de mistake_cause   
+        4) Check_global_resources():
                                 - bool de si para la fecha planificada del evento estan disponibles los recursos que este pide (True) o si no (False)
                                 - lista de los recursos que faltan en dicha fecha para que el evento se pueda llevar a cabo 
-        4)Check_r_d():
+        5)Check_r_d():
                                 - bool de si la fecha introducida por el usuario esta en un formato correcto  (True) o no (False)    
                                 """
 
         result = [
             self.Check_min_resources(),
             self.Check_collitions(),
+            self.Check_depen_resources(),
             self.Check_global_resources(),
             self.Check_r_d()
         ]
@@ -129,7 +150,7 @@ resources = {
              "guardias" : 35,
              "ingenieros" : 12,
              "ciberneticos" : 20,
-             "USD" : 20000000
+             "USD" : 20 
 }
 collitions = {
             "mesas" : (),
@@ -142,21 +163,72 @@ collitions = {
             "ciberneticos" : ('ingenieros'),
             "USD" : ()
 }
+depen_resources = {
+            "mesas" : ('sillas'),
+            "sillas" : ('mesas'),
+            "organizador" : ('USD'),
+            "comida" : (),
+            "prostitutas" : ('guardias'),
+            "guardias" : ('USD'),
+            "ingenieros" : ('USD', 'mesas'),
+            "ciberneticos" : ('USD', 'mesas'),
+            "USD" : ()
+}
 
-def Refresh_data_base(event):
-    events = Load_date_base('events')
+def Refresh_data_base_event(event):
+    with open('Database.json', 'r', encoding= 'utf-8') as db:
+        db_dict = json.load(db)
+
+    events = db_dict['events']
     event_dict = event.__dict__
     event_dict.update({"id" : str(ulid.new())})
     events.append(event_dict)
-    info = {
-        "collitions" : collitions,
-        "resources" : resources,
-        "events" : events
-    }
     
 
-    with open("Database.json", "w", encoding= "utf-8") as file:
-        json.dump(info, file, indent= 4) #json.dump(datos, file, indent = 4) ident = 4 -> autoformater
+    with open("Database.json", "w", encoding= "utf-8") as db:
+        json.dump(db_dict, db, indent= 4) #json.dump(datos, file, indent = 4) ident = 4 -> autoformater
+
+def Refresh_data_base_logic(action: str,typ: str, key, value = None):
+    with open('Database.json', 'r', encoding= 'utf-8') as db:
+        db_dict = json.load(db)
+
+    if typ == 'resources':
+        if action == 'a':
+            db_dict['resources'].update({key: value})
+        elif action == 'd':
+            try:
+                del db_dict['resources'][key]
+            except KeyError:
+                return False
+
+    elif typ == 'collitions':
+        if action == 'a':
+            db_dict['collitions'].update({key: value}) 
+        elif action == 'd':
+            try:
+                del db_dict['collitions'][key]
+            except KeyError:
+                return False
+
+    elif typ == 'depen_resources':
+        if action == 'a':
+            db_dict['depen_resources'].update({key: value})
+        elif action == 'd':
+            try:
+                del db_dict['depen_resources'][key]
+            except KeyError:
+                return False
+
+    #Por pura robustez
+    else :
+        return False
+
+
+    with open('Database.json', 'w', encoding= 'utf-8') as db:
+        json.dump(db_dict, db, indent= 4)
+        
+    return True
+
 
 def Refresh_visualization():
     events = Load_date_base('events')
@@ -203,13 +275,26 @@ def Load_date_base(element): #elements da indicaciones para decidir lo que voy a
     return datos_leidos[element]
 
 
+def Delete_event(ID):
+    with open('Database.json', 'r', encoding = 'utf-8') as db:
+        db_dict = json.load(db)
+    
+    events = db_dict['events']
+
+    for e in events:
+        if ID == e['id']:
+            events.remove(e)
+        
+    with opne('Database.json', 'w', encoding = 'utf-8') as db:
+        json.dump(db_dict, db, indent = 4)
+
 
 def Try_event(event_type: str, start_date: str, end_date: str, resources: list,  depen: list) -> bool:
     if event_type == 'Espectaculo Humoristico':
-        validation = Validation(start_date, end_date, E_h_depe, resources)
+        validation = Validation(start_date, end_date, dependencias_eventos_definidos[0], resources)
     
     elif event_type == 'Evento Cultural':
-        validation = Validation(start_date, end_date, E_c_depe, resources)
+        validation = Validation(start_date, end_date, dependencias_eventos_definidos[1], resources)
 
     elif event_type == 'Personalizado':
         validation = Validation(start_date, end_date, depen, resources)

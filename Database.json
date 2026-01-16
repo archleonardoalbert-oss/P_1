@@ -13,19 +13,48 @@
         ],
         "guardias": [],
         "ingenieros": [],
-        "ciberneticos": "ingenieros",
+        "ciberneticos": [
+            "ingenieros"
+        ],
         "USD": []
     },
     "resources": {
         "mesas": 4,
         "sillas": 12,
         "organizador": 15,
-        "comida": 10000,
+        "comida": 100,
         "prostitutas": 73,
         "guardias": 35,
         "ingenieros": 12,
         "ciberneticos": 20,
-        "USD": 20000000
+        "USD": 20
+    },
+    "depen_resources": {
+        "mesas": [
+            "sillas"
+        ],
+        "sillas": [
+            "mesas"
+        ],
+        "organizador": [
+            "USD"
+        ],
+        "comida": [],
+        "prostitutas": [
+            "guardias"
+        ],
+        "guardias": [
+            "USD"
+        ],
+        "ingenieros": [
+            "USD",
+            "mesas"
+        ],
+        "ciberneticos": [
+            "USD",
+            "mesas"
+        ],
+        "USD": []
     },
     "events": [
         {
@@ -66,6 +95,77 @@
                 "comida"
             ],
             "id": "01KEZC2FG4E9AFHXYWKWMXYYRS"
+        },
+        {
+            "name": "P1!\\n\\r",
+            "start_date": "17/1/2026",
+            "end_date": "17/1/2026",
+            "depen": [
+                "mesas",
+                "sillas",
+                "comida",
+                "guardias",
+                "ingenieros",
+                "ciberneticos",
+                "USD"
+            ],
+            "resources": [
+                "mesas",
+                "sillas",
+                "USD",
+                "comida",
+                "guardias",
+                "ingenieros",
+                "ciberneticos"
+            ],
+            "id": "01KF2PCXBPM3CNJ7WT9Q5ST4ZH"
+        },
+        {
+            "name": "P3\\n\\r",
+            "start_date": "7/1/2026",
+            "end_date": "7/1/2026",
+            "depen": [],
+            "resources": [
+                "mesas",
+                "sillas",
+                "organizador",
+                "USD"
+            ],
+            "id": "01KF2QX1353S8MWK209TJQKH08"
+        },
+        {
+            "name": "P3\\n\\r",
+            "start_date": "7/1/2026",
+            "end_date": "7/1/2026",
+            "depen": [],
+            "resources": [
+                "mesas",
+                "sillas",
+                "organizador",
+                "USD"
+            ],
+            "id": "01KF2QX6P7EJ895PTN7EX70QY2"
+        },
+        {
+            "name": "P!",
+            "start_date": "6/1/2026",
+            "end_date": "7/1/2026",
+            "depen": [
+                "mesas",
+                "sillas",
+                "organizador",
+                "ciberneticos"
+            ],
+            "resources": [
+                "mesas",
+                "sillas",
+                "organizador",
+                "comida",
+                "guardias",
+                "ciberneticos",
+                "USD"
+            ],
+            "id": "01KF2R12F48DQWWJ10XZ07HH87"
         }
     ]
 }

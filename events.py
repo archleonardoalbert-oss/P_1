@@ -22,13 +22,13 @@ class Event(ABC):
     
 
 class Espectaculo_Humoristico(Event):
-    depend = E_h_depe
+    depend = dependencias_eventos_definidos[0]
     nam = 'Espectaculo Humoristico'
     def __init__(self, start_date, end_date, resources, depen = depend, name = nam):
         super().__init__(start_date, end_date, resources, depen, name)
 
 class Evento_Cultural(Event):
-    depend = E_c_depe
+    depend = dependencias_eventos_definidos[1]
     nam = 'Evento Cultural'
     def __init__(self, start_date, end_date, resources, depen = depend, name = nam):
         super().__init__(start_date, end_date, resources, depen, name)
