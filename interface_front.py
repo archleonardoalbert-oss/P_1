@@ -42,8 +42,7 @@ def Inicio():
     st.video(
         'Media/Luxury.mp4',
         autoplay= True,
-        loop= True,
-        
+        loop= True,      
         ) 
     albun = [f'Media/{entry.name}' for entry in Path('Media').iterdir() if entry.is_file() and entry.name != '360_F_381799100_YOZ0uoR7Wz3YIGZHRYhEjlqTkGn8EMMd.jpg' and entry.name != 'Luxury.mp4']
 
