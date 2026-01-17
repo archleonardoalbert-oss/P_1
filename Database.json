@@ -58,103 +58,34 @@
     },
     "events": [
         {
-            "name": "Locura",
-            "start_date": "10/1/2026",
-            "end_date": "12/1/2026",
+            "name": "Espectaculo Humoristico",
+            "start_date": "1/1/2026",
+            "end_date": "7/1/2026",
             "depen": [
-                "comida",
-                "prostitutas",
+                "mesas",
+                "sillas",
+                "organizador"
+            ],
+            "resources": [
+                "mesas",
+                "sillas",
+                "organizador",
                 "USD"
             ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "prostitutas",
-                "guardias",
-                "USD",
-                "comida"
-            ],
-            "id": "01KEGJ4BNRS2TM0346PCK0JYS2"
+            "id": "01KF4BR2S9BZEFZCPN2K51MJ1P"
         },
         {
-            "name": "Evento Cultural",
-            "start_date": "15/1/2026",
-            "end_date": "15/1/2026",
+            "name": "P!\\n\\r\\r\\n",
+            "start_date": "1/2/2026",
+            "end_date": "28/2/2026",
             "depen": [
                 "mesas",
                 "sillas",
                 "organizador",
-                "comida"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "ciberneticos",
-                "USD",
-                "comida"
-            ],
-            "id": "01KEZC2FG4E9AFHXYWKWMXYYRS"
-        },
-        {
-            "name": "P1!\\n\\r",
-            "start_date": "17/1/2026",
-            "end_date": "17/1/2026",
-            "depen": [
-                "mesas",
-                "sillas",
                 "comida",
                 "guardias",
-                "ingenieros",
                 "ciberneticos",
                 "USD"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "USD",
-                "comida",
-                "guardias",
-                "ingenieros",
-                "ciberneticos"
-            ],
-            "id": "01KF2PCXBPM3CNJ7WT9Q5ST4ZH"
-        },
-        {
-            "name": "P3\\n\\r",
-            "start_date": "7/1/2026",
-            "end_date": "7/1/2026",
-            "depen": [],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "USD"
-            ],
-            "id": "01KF2QX1353S8MWK209TJQKH08"
-        },
-        {
-            "name": "P3\\n\\r",
-            "start_date": "7/1/2026",
-            "end_date": "7/1/2026",
-            "depen": [],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "USD"
-            ],
-            "id": "01KF2QX6P7EJ895PTN7EX70QY2"
-        },
-        {
-            "name": "P!",
-            "start_date": "6/1/2026",
-            "end_date": "7/1/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "ciberneticos"
             ],
             "resources": [
                 "mesas",
@@ -165,7 +96,103 @@
                 "ciberneticos",
                 "USD"
             ],
-            "id": "01KF2R12F48DQWWJ10XZ07HH87"
+            "id": "01KF4DWTRB8TPENCM8NCCX0V3Q"
+        },
+        {
+            "name": "P!\\n\\r\\r\\n",
+            "start_date": "2/2/2026",
+            "end_date": "2/2/2026",
+            "depen": [
+                "mesas",
+                "sillas",
+                "organizador",
+                "comida",
+                "guardias",
+                "ciberneticos",
+                "USD"
+            ],
+            "resources": [
+                "mesas",
+                "sillas",
+                "organizador",
+                "comida",
+                "guardias",
+                "ciberneticos",
+                "USD"
+            ],
+            "id": "01KF4E74YC6MPKZ3C52602QD3K"
+        },
+        {
+            "name": "P!\\n\\r\\r\\n",
+            "start_date": "1/1/2026",
+            "end_date": "1/1/2026",
+            "depen": [
+                "mesas",
+                "sillas",
+                "organizador",
+                "comida",
+                "ciberneticos",
+                "USD",
+                "guardias"
+            ],
+            "resources": [
+                "mesas",
+                "sillas",
+                "organizador",
+                "comida",
+                "guardias",
+                "ciberneticos",
+                "USD"
+            ],
+            "id": "01KF4EA65D4MK1G3X5GTWRQ5X0"
+        },
+        {
+            "name": "P!\\n\\r\\r\\n",
+            "start_date": "2/1/2026",
+            "end_date": "2/1/2026",
+            "depen": [
+                "mesas",
+                "sillas",
+                "organizador",
+                "comida",
+                "guardias",
+                "ciberneticos",
+                "USD"
+            ],
+            "resources": [
+                "mesas",
+                "sillas",
+                "organizador",
+                "comida",
+                "guardias",
+                "ciberneticos",
+                "USD"
+            ],
+            "id": "01KF4EJ9ETEYVNR252C390685P"
+        },
+        {
+            "name": "P",
+            "start_date": "3/1/2026",
+            "end_date": "3/1/2026",
+            "depen": [
+                "mesas",
+                "sillas",
+                "organizador",
+                "comida",
+                "guardias",
+                "ciberneticos",
+                "USD"
+            ],
+            "resources": [
+                "mesas",
+                "sillas",
+                "organizador",
+                "comida",
+                "guardias",
+                "ciberneticos",
+                "USD"
+            ],
+            "id": "01KF4EM6KSGEA0X6J1DYT9YRSF"
         }
     ]
 }

@@ -226,7 +226,7 @@ def Refresh_data_base_logic(action: str,typ: str, key, value = None):
 
     with open('Database.json', 'w', encoding= 'utf-8') as db:
         json.dump(db_dict, db, indent= 4)
-        
+
     return True
 
 
@@ -251,7 +251,6 @@ def Refresh_visualization():
 
 
         f_start_date = '-'.join(f_start_date)
-        f_end_date[2] = str(int(f_end_date[2]) + 1)
         f_end_date = '-'.join(f_end_date)
 
         color = colors[i % len(colors)] #Asignandole un color al evento

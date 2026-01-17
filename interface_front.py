@@ -354,14 +354,9 @@ def Visualizacion():
     id = []
 
     for e in events:
-        #Corrigiendo el adelanto de fecha de la fecha de fin
-        end = e['end'].split('-')
-        end[-1] = str(int(end[-1]) - 1)
-        end = '-'.join(end)
-
         names.append(e['title'])
         colors.append(e['color'])
-        dates.append(f'{e['start']} / {end}')
+        dates.append(f'{e['start']} / {e['end']}')
         id.append(e['id'])
     
     #columnas
