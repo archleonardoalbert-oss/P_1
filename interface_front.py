@@ -6,11 +6,14 @@ import json
 import datetime
 import pandas as pd
 import plotly.express as px
+from pathlib import Path
+
 
 total_resources = interface_back.resources.keys()
 st.set_page_config(layout= "wide")
 def main():
     st.title("Albert Hotel")
+    st.image('Media/360_F_381799100_YOZ0uoR7Wz3YIGZHRYhEjlqTkGn8EMMd.jpg', width= 180)
 
     #Menu lateral
     seccion = st.sidebar.selectbox(
@@ -36,6 +39,32 @@ def Inicio():
     st.markdown("""
     El objetivo de esta pagina es que tengas el poder de administrar los eventos de Albert Hotel
     """)
+    st.video(
+        'Media/Luxury.mp4',
+        autoplay= True,
+        loop= True,
+        
+        ) 
+    albun = [f'Media/{entry.name}' for entry in Path('Media').iterdir() if entry.is_file() and entry.name != '360_F_381799100_YOZ0uoR7Wz3YIGZHRYhEjlqTkGn8EMMd.jpg' and entry.name != 'Luxury.mp4']
+
+    with st.container():
+        st.markdown('<div class = "horizontal-gallery">', unsafe_allow_html= True)
+        col1, col2, col3 = st.columns([1, 1, 1])
+        max_col = len(albun) // 3
+        for i in range(len(albun)):
+            image = albun[i]
+            if i <= max_col:
+                with col1:
+                    st.image(image, width= 400)
+            elif max_col < i <= 2 * max_col:
+                with col2:
+                    st.image(image, width= 400)
+            else:
+                with col3:
+                    st.image(image, width= 400)
+
+
+        st.markdown('</div>', unsafe_allow_html= True)
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -129,10 +158,22 @@ def Administrar():
 
         #Eliminar
         if st.session_state.Eliminar:
-            id = st.number_input('Ingrese el ID del evento que desea eliminar')
+            ESPACIO_NO_QUEBRANTABLE = '\u00A0'
+            ids = {}
+            _events = interface_back.Load_date_base('events')
 
-            if st.button('Delete'):
-                pass
+            for e in _events:
+                ids.update({ e['id'] : f'{e['id']}{ESPACIO_NO_QUEBRANTABLE * 8}------>{ESPACIO_NO_QUEBRANTABLE * 8}{e['name']} ({e['start_date']} - {e['end_date']})'})
+
+            id = st.multiselect(
+                'Seleccione el ID del elemento que desea eliminar',
+                 options = ids.keys(),
+                 format_func= lambda k: ids[k]
+                 )
+
+
+            if st.button('OK'):
+                interface_back.Delete_event(id)
 
         
 
@@ -146,6 +187,9 @@ def Administrar_recursos():
     #Inicializando st.session_state 
     if 'Crear' not in st.session_state:
         st.session_state.Crear = False
+
+    if 'Modificar' not in st.session_state:
+        st.session_state.Modificar = False
     
     if 'Eliminar' not in st.session_state:
         st.session_state.Eliminar = False
@@ -153,13 +197,21 @@ def Administrar_recursos():
     with col_left:
         if st.button('Crear'):
             st.session_state.Crear = not st.session_state.Crear
-            if st.session_state.Eliminar:
+            if st.session_state.Crear:
+                st.session_state.Eliminar = False
+                st.session_state.Modificar = False
+
+        if st.button('Modificar'):
+            st.session_state.Modificar = not st.session_state.Modificar
+            if st.session_state.Modificar:
+                st.session_state.Crear = False
                 st.session_state.Eliminar = False
         
         if st.button('Eliminar'):
             st.session_state.Eliminar = not st.session_state.Eliminar
-            if st.session_state.Crear:
+            if st.session_state.Eliminar:
                 st.session_state.Crear = False
+                st.session_state.Modificar = False
 
         
     with col_mid:
@@ -167,8 +219,8 @@ def Administrar_recursos():
         if st.session_state.Crear:
             result = True
             action = 'a'
-            key = st.text_input('Nombre del recurso')
-            stack = st.number_input('Cantidad', min_value= 1, step= 1)
+            key1 = st.text_input('Nombre del recurso')
+            stack1 = st.number_input('Cantidad', min_value= 1, step= 1, key = 'n1')
             collitions = st.multiselect('Coliciones', resources)
             depen = st.multiselect('Dependencias', resources)
 
@@ -200,31 +252,109 @@ def Administrar_recursos():
                     result = False
 
                 elif result:
-                    interface_back.Refresh_data_base_logic(action, 'resources', key, stack)
-                    interface_back.Refresh_data_base_logic(action, 'collitions', key, collitions)
-                    interface_back.Refresh_data_base_logic(action, 'depen_resources', key, depen)
+                    interface_back.Refresh_data_base_logic(action, 'resources', key1, stack)
+                    interface_back.Refresh_data_base_logic(action, 'collitions', key1, collitions)
+                    interface_back.Refresh_data_base_logic(action, 'depen_resources', key1, depen)
+                    st.success(f'Evento {key1} agregado correctamente')
+
+
+        if st.session_state.Modificar:
+            resources = list(interface_back.Load_date_base('resources').keys())
+
+            action = 'm'
+            key2 = st.selectbox('Nombre del recurso', resources)
+            resources.remove(key2)
+
+            old_collitions = interface_back.Load_date_base('collitions')[key2]
+            old_depen  = interface_back.Load_date_base('depen_resources')[key2]
+
+            for c in old_collitions:
+                resources.remove(c)
+            
+            for d in old_depen:
+                resources.remove(d)
+            
+            stack2 = st.number_input('Cantidad', min_value= 1, step= 1, key= 'n2')
+            
+            collitions_new = st.multiselect('Agregar coliciones nuevas', resources, key= 'm1')
+            depen_new = st.multiselect('Agregar dependencias nuevas', resources, key= 'm2')
+
+            collitions_del = st.multiselect('Eliminar coliciones', old_collitions, key= 'm3')
+            depen_del = st.multiselect('Eliminar dependencias', old_depen, key= 'm4')
+
+            if st.button('save'):
+                result = True
+
+                collitions_real = old_collitions
+                depen_real = old_depen
+
+                #Recreando el resultado final de la las coliciones
+                for c in collitions_new:
+                    collitions_real.append(c)
+                
+                for c in collitions_del:
+                    collitions_real.remove(c)
+
+                #Recreando el resultado final de las dependencias
+                for d in depen_new:
+                    depen_real.append(d)
+
+                for d in depen_del:
+                    depen_real.remove(d)
+
+                for d in depen_real:
+                    if d in collitions_real:
+                        st.error('Hay una interseccion entre las dependencias y las coliciones de tu recurso')
+                        result = False
+                        break
+
+                if result:
+                    r = interface_back.Refresh_data_base_logic(action, 'resources', key2, stack2)
+                    c = interface_back.Refresh_data_base_logic(action, 'collitions', key2, a = collitions_new, d = collitions_del)
+                    d = interface_back.Refresh_data_base_logic(action, 'depen_resources', key2, a = depen_new, d = depen_del)
+
+                    if not r:
+                        st.error('No se pudo modificar el volumen del recurso')
+                    if not c:
+                        st.error('No se pudieron modificar las coliciones del recurso')
+                    if not d:
+                        st.error('No se pudieron modificar las dependencias del recurso')
+                    if r and c and d:
+                        st.success(f'Recurso "{key2}" modificado correctamente')
+
+
+
+
 
 
         if st.session_state.Eliminar:
             result = True
             action = 'd'
-            key = st.selectbox('Nombre del recurso', interface_back.Load_date_base('resources').keys())
+            key3 = st.selectbox('Nombre del recurso', interface_back.Load_date_base('resources').keys(), key= 's3')
 
             if st.button('OK'):
                 result = True
                 for l in interface_back.dependencias_eventos_definidos:
                     for r in l:
-                        if key == r:
+                        if key3 == r:
                             result = False
                             st.error('No puedes eliminar un recurso de un evento inmutable')
                 
                 if result:
-                    if not interface_back.Refresh_data_base_logic(action, 'resources', key):
-                        st.error('No se pudo eliminar de los recursos')
-                    if not interface_back.Refresh_data_base_logic(action, 'collitions', key):
-                        st.error('No se pudo eliminar de las coliciones')
-                    if not interface_back.Refresh_data_base_logic(action, 'depen_resources', key):
-                        st.error('No se pudo eliminar de las dependencias')
+                    r = interface_back.Refresh_data_base_logic(action, 'resources', key3)
+                    c = interface_back.Refresh_data_base_logic(action, 'collitions', key3)
+                    d = interface_back.Refresh_data_base_logic(action, 'depen_resources', key3)
+
+                    if not r:
+                        st.error('No se pudo eliminar el volumen del recurso')
+                    if not c:
+                        st.error('No se pudieron eliminar las coliciones del recurso')
+                    if not d:
+                        st.error('No se pudieron eliminar las dependencias del recurso')
+                    if r and c and d:
+                        st.success(f'Se ha eliminado el recurso {key3} correctamente')
+                    
+        
 
     
     # GRAFICO 

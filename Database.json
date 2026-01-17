@@ -9,25 +9,28 @@
         "comida": [],
         "prostitutas": [
             "ingenieros",
-            "ciberneticos"
+            "mesas"
         ],
         "guardias": [],
         "ingenieros": [],
         "ciberneticos": [
+            "prostitutas",
             "ingenieros"
         ],
-        "USD": []
+        "USD": [],
+        "Bus": []
     },
     "resources": {
         "mesas": 4,
         "sillas": 12,
         "organizador": 15,
         "comida": 100,
-        "prostitutas": 73,
+        "prostitutas": 20,
         "guardias": 35,
         "ingenieros": 12,
-        "ciberneticos": 20,
-        "USD": 20
+        "ciberneticos": 10,
+        "USD": 20,
+        "Bus": 12
     },
     "depen_resources": {
         "mesas": [
@@ -40,9 +43,7 @@
             "USD"
         ],
         "comida": [],
-        "prostitutas": [
-            "guardias"
-        ],
+        "prostitutas": [],
         "guardias": [
             "USD"
         ],
@@ -51,148 +52,13 @@
             "mesas"
         ],
         "ciberneticos": [
-            "USD",
-            "mesas"
+            "USD"
         ],
-        "USD": []
+        "USD": [],
+        "Bus": [
+            "USD",
+            "organizador"
+        ]
     },
-    "events": [
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "1/1/2026",
-            "end_date": "7/1/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "USD"
-            ],
-            "id": "01KF4BR2S9BZEFZCPN2K51MJ1P"
-        },
-        {
-            "name": "P!\\n\\r\\r\\n",
-            "start_date": "1/2/2026",
-            "end_date": "28/2/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "comida",
-                "guardias",
-                "ciberneticos",
-                "USD"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "comida",
-                "guardias",
-                "ciberneticos",
-                "USD"
-            ],
-            "id": "01KF4DWTRB8TPENCM8NCCX0V3Q"
-        },
-        {
-            "name": "P!\\n\\r\\r\\n",
-            "start_date": "2/2/2026",
-            "end_date": "2/2/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "comida",
-                "guardias",
-                "ciberneticos",
-                "USD"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "comida",
-                "guardias",
-                "ciberneticos",
-                "USD"
-            ],
-            "id": "01KF4E74YC6MPKZ3C52602QD3K"
-        },
-        {
-            "name": "P!\\n\\r\\r\\n",
-            "start_date": "1/1/2026",
-            "end_date": "1/1/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "comida",
-                "ciberneticos",
-                "USD",
-                "guardias"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "comida",
-                "guardias",
-                "ciberneticos",
-                "USD"
-            ],
-            "id": "01KF4EA65D4MK1G3X5GTWRQ5X0"
-        },
-        {
-            "name": "P!\\n\\r\\r\\n",
-            "start_date": "2/1/2026",
-            "end_date": "2/1/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "comida",
-                "guardias",
-                "ciberneticos",
-                "USD"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "comida",
-                "guardias",
-                "ciberneticos",
-                "USD"
-            ],
-            "id": "01KF4EJ9ETEYVNR252C390685P"
-        },
-        {
-            "name": "P",
-            "start_date": "3/1/2026",
-            "end_date": "3/1/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "comida",
-                "guardias",
-                "ciberneticos",
-                "USD"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "comida",
-                "guardias",
-                "ciberneticos",
-                "USD"
-            ],
-            "id": "01KF4EM6KSGEA0X6J1DYT9YRSF"
-        }
-    ]
+    "events": []
 }

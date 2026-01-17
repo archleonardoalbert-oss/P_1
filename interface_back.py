@@ -188,7 +188,7 @@ def Refresh_data_base_event(event):
     with open("Database.json", "w", encoding= "utf-8") as db:
         json.dump(db_dict, db, indent= 4) #json.dump(datos, file, indent = 4) ident = 4 -> autoformater
 
-def Refresh_data_base_logic(action: str,typ: str, key, value = None):
+def Refresh_data_base_logic(action: str,typ: str, key, value: int = None, a: list = None, d: list = None):
     with open('Database.json', 'r', encoding= 'utf-8') as db:
         db_dict = json.load(db)
 
@@ -200,6 +200,11 @@ def Refresh_data_base_logic(action: str,typ: str, key, value = None):
                 del db_dict['resources'][key]
             except KeyError:
                 return False
+        elif action == 'm':
+            try:
+                db_dict['resources'][key] = value
+            except KeyError:
+                return False
 
     elif typ == 'collitions':
         if action == 'a':
@@ -209,6 +214,16 @@ def Refresh_data_base_logic(action: str,typ: str, key, value = None):
                 del db_dict['collitions'][key]
             except KeyError:
                 return False
+        elif action == 'm':
+            try:
+                for c_a in a:
+                    db_dict['collitions'][key].append(c_a)
+                
+                for c_d in d:
+                    db_dict['collitions'][key].remove(c_d)
+            except KeyError:
+                return False
+        
 
     elif typ == 'depen_resources':
         if action == 'a':
@@ -216,6 +231,15 @@ def Refresh_data_base_logic(action: str,typ: str, key, value = None):
         elif action == 'd':
             try:
                 del db_dict['depen_resources'][key]
+            except KeyError:
+                return False
+        elif action == 'm':
+            try:
+                for d_a in a:
+                    db_dict['depen_resources'][key].append(d_a)
+                
+                for d_d in d:
+                    db_dict['depen_resources'][key].remove(d_d)
             except KeyError:
                 return False
 
@@ -274,18 +298,18 @@ def Load_date_base(element): #elements da indicaciones para decidir lo que voy a
     return datos_leidos[element]
 
 
-def Delete_event(ID):
+def Delete_event(ID: list):
     with open('Database.json', 'r', encoding = 'utf-8') as db:
         db_dict = json.load(db)
     
     events = db_dict['events']
-
-    for e in events:
-        if ID == e['id']:
-            events.remove(e)
-        
-    with opne('Database.json', 'w', encoding = 'utf-8') as db:
-        json.dump(db_dict, db, indent = 4)
+    for id in ID:
+        for e in events:
+            if id == e['id']:
+                events.remove(e)
+            
+        with open('Database.json', 'w', encoding = 'utf-8') as db:
+            json.dump(db_dict, db, indent = 4)
 
 
 def Try_event(event_type: str, start_date: str, end_date: str, resources: list,  depen: list) -> bool:

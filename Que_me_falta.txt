@@ -1,5 +1,0 @@
-1) La interfaz completa
-2) Validar si hay recursos disponibles a la hora de cerear un evento
-3) Validar el intervalo de fecha
-4) Completar las dependencias de los recursos
-5) Completar las coliciones de los recursos
