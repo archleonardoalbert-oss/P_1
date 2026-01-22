@@ -5,6 +5,7 @@ from interface_back import events
 import json
 import datetime
 import pandas as pd
+import numpy as np
 import plotly.express as px
 from pathlib import Path
 
@@ -42,10 +43,11 @@ def Inicio():
     st.video(
         'Media/Luxury.mp4',
         autoplay= True,
-        loop= True,      
+        loop= True
         ) 
     albun = [f'Media/{entry.name}' for entry in Path('Media').iterdir() if entry.is_file() and entry.name != '360_F_381799100_YOZ0uoR7Wz3YIGZHRYhEjlqTkGn8EMMd.jpg' and entry.name != 'Luxury.mp4']
 
+    
     with st.container():
         st.markdown('<div class = "horizontal-gallery">', unsafe_allow_html= True)
         col1, col2, col3 = st.columns([1, 1, 1])
@@ -69,6 +71,7 @@ def Inicio():
 
 def Administrar():
     st.header('Administracion de Eventos')
+    st.session_state.Save = False
 
     #Creando 3 columnas para mejor visualizacion de la interfaz
     col_left, col_mid, col_right = st.columns([1, 5, 1], border= True)
@@ -120,7 +123,13 @@ def Administrar():
                 name = st.text_input('Nombre del evento')
                 depe = st.multiselect('Que recursos necesita tu evento ?', options= total_resources)
             
+            if 'Save' not in st.session_state:
+                st.session_state.Save = False
+
             if st.button('Save'):
+                st.session_state.Save = not st.session_state.Save
+            
+            if st.session_state.Save:
                 validation = interface_back.Try_event(event_type, start_date, end_date, selected_resources, depe)
                 
                 onj = None
@@ -135,6 +144,28 @@ def Administrar():
                     
                     interface_back.Refresh_data_base_event(obj)
                     st.success('Evento agregado exitosamente')
+                
+                elif validation[4] and validation[0][0] and validation[1][0] and validation[2][0] and not validation[3][0]:
+                    suggested_date = interface_back.Find_Date(event_type, start_date, end_date, selected_resources, depe)
+
+
+                    if not suggested_date == False:
+                        st.warning(f"""Para la fecha que requiere su evento no tenemos dsponibles los recursos ({validation[3][1]}).\r\n
+    Le sugerimos que planifique el evento en la siguiente fecha disponible ({suggested_date})""")
+
+                    #TENGO QUE VERIFICAR POR QUE CUANDO PRESIONO ESTE BOTNO NO HACE ABSOLUTAMENTE NADA
+
+                    if st.button('Ok'):
+                        if event_type == e1:
+                            obj = events.Espectaculo_Humoristico(suggested_date[0], suggested_date[1], selected_resources)
+                        elif event_type == e2:
+                            obj = events.Evento_Cultural(suggested_date[0], suggested_date[1], selected_resources)
+                        elif event_type == e3:
+                            obj = events.Evento_Personalizado(suggested_date[0], suggested_date[1], selected_resources, depe, name)
+
+                        interface_back.Refresh_data_base_event(obj)
+                        st.success('Evento agregado exitosamente')
+                        st.session_state.Save = False
                 
                 else:
                     depen_resources = ''
@@ -174,7 +205,7 @@ def Administrar():
             if st.button('OK'):
                 interface_back.Delete_event(id)
 
-        
+    
 
 
 
@@ -246,12 +277,12 @@ def Administrar_recursos():
                         result = False
                         break
                 
-                if key in resources:
+                if key1 in resources:
                     st.error('No puedes crear un recurso ya existente')
                     result = False
 
                 elif result:
-                    interface_back.Refresh_data_base_logic(action, 'resources', key1, stack)
+                    interface_back.Refresh_data_base_logic(action, 'resources', key1, stack1)
                     interface_back.Refresh_data_base_logic(action, 'collitions', key1, collitions)
                     interface_back.Refresh_data_base_logic(action, 'depen_resources', key1, depen)
                     st.success(f'Evento {key1} agregado correctamente')

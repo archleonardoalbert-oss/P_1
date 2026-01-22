@@ -1,6 +1,6 @@
 import json
 import events
-from datetime import datetime as date
+from datetime import datetime as date, timedelta
 from dependencias import *
 import ulid
 
@@ -126,7 +126,10 @@ class Validation():
                                 - lista de los recursos que faltan en dicha fecha para que el evento se pueda llevar a cabo 
         5)Check_r_d():
                                 - bool de si la fecha introducida por el usuario esta en un formato correcto  (True) o no (False)    
-                                """
+                                
+        6)Valid():              
+                                - bool de si el evento pasa todas las validaciones (True) o no (False)
+        """
 
         result = [
             self.Check_min_resources(),
@@ -322,3 +325,23 @@ def Try_event(event_type: str, start_date: str, end_date: str, resources: list, 
     elif event_type == 'Personalizado':
         validation = Validation(start_date, end_date, depen, resources)
     return validation.Details()
+
+
+def Find_Date(event_type: str, start_date: str, end_date: str, resources: list,  depen: list):
+    format = '%d/%m/%Y'
+    try:
+        start_date_D = date.strptime(start_date, format)
+        end_date_D = date.strptime(end_date, format)
+    except:
+        return False
+
+    while not Try_event(event_type, start_date, end_date, resources, depen)[-1]:
+        start_date_D = start_date_D + timedelta(days= 1)
+        end_date_D = end_date_D + timedelta(days= 1)
+
+        start_date = start_date_D.strftime(format)
+        end_date = end_date_D.strftime(format)
+
+    return (start_date, end_date)
+
+    
