@@ -10,10 +10,10 @@ import plotly.express as px
 from pathlib import Path
 
 
-total_resources = interface_back.resources.keys()
+total_resources = interface_back.Load_date_base('resources')
 st.set_page_config(layout= "wide")
 def main():
-    st.title("Albert Hotel")
+    st.title("LuxAlbert Hotel")
     st.image('Media/360_F_381799100_YOZ0uoR7Wz3YIGZHRYhEjlqTkGn8EMMd.jpg', width= 180)
 
     #Menu lateral
@@ -36,14 +36,15 @@ def main():
 
 ######################################################################################################################################################
 def Inicio():
-    st.header('Bienvenido a Albert Hotel')
+    st.header('Bienvenido a LuxAlbert Hotel')
     st.markdown("""
-    El objetivo de esta pagina es que tengas el poder de administrar los eventos de Albert Hotel
+    El objetivo de esta pagina es que tengas el poder de administrar los eventos de LuxAlbert Hotel
     """)
     st.video(
         'Media/Luxury.mp4',
         autoplay= True,
-        loop= True
+        loop= True,
+        muted= True,
         ) 
     albun = [f'Media/{entry.name}' for entry in Path('Media').iterdir() if entry.is_file() and entry.name != '360_F_381799100_YOZ0uoR7Wz3YIGZHRYhEjlqTkGn8EMMd.jpg' and entry.name != 'Luxury.mp4']
 
@@ -105,23 +106,39 @@ def Administrar():
         if st.session_state.Crear:
             e1 = 'Espectaculo Humoristico'
             e2 = 'Evento Cultural'
-            e3 = 'Personalizado'
+            e3 = 'Reunion de negocios'
+            e4 = 'Remodelacion'
+            e5 = 'Excurcion'
+            e6 = 'Torneo gamer'
+            e7 = 'Temporada de ofertas'
+            e8 = 'Personalizado'
 
             name = None
             depe = None
             event_type = st.selectbox('Que tipo de evento quiere crear ?',
-                                        [e1, e2, e3])
+                                        [e1, e2, e3, e4, e5, e6, e7, e8])
             start_date = st.text_input('Ingrese la fecha de inicio del evento')
             end_date = st.text_input('Ingrese la fecha de finalizacion del evento')
             selected_resources = st.multiselect('Que recursos requerira para su evento ?', options= total_resources)
 
             if event_type == e1:
-                pass
+                st.image('Media/creacion_eventos/Espectaculo_Humoristico.avif', width= 450)
             elif event_type == e2:
-                pass
+                st.image('Media/creacion_eventos/Evento_cultural.jpg', width= 370)
             elif event_type == e3:
+                st.image('Media/creacion_eventos/Reunion_de_negocios.jpg', width= 370)
+            elif event_type == e4:
+                st.image('Media/creacion_eventos/Remodelacion.jpg', width= 370)
+            elif event_type == e5:
+                st.image('Media/creacion_eventos/Excursion.jpg', width= 370)
+            elif event_type == e6:
+                st.image('Media/creacion_eventos/Gamer.jpg', width= 370)
+            elif event_type == e7:
+                st.image('Media/creacion_eventos/Ofertas.jpg', width= 370)
+            elif event_type == e8:
                 name = st.text_input('Nombre del evento')
                 depe = st.multiselect('Que recursos necesita tu evento ?', options= total_resources)
+                st.image('Media/creacion_eventos/Personalizado.jpg')
             
             if 'Save' not in st.session_state:
                 st.session_state.Save = False
@@ -140,6 +157,16 @@ def Administrar():
                     elif event_type == e2:
                         obj = events.Evento_Cultural(start_date, end_date, selected_resources)
                     elif event_type == e3:
+                        obj = events.Reunion_De_Negocios(start_date, end_date, selected_resources)
+                    elif event_type == e4:
+                        obj = events.Remodelacion(start_date, end_date, selected_resources)
+                    elif event_type == e5:
+                        obj = events.Excurcion(start_date, end_date, selected_resources)
+                    elif event_type == e6:
+                        obj = events.Torneo_Gamer(start_date, end_date, selected_resources)
+                    elif event_type == e7:
+                        obj = events.Temporada_De_Ofertas(start_date, end_date, selected_resources)
+                    elif event_type == e8:
                         obj = events.Evento_Personalizado(start_date, end_date, selected_resources, depe, name)
                     
                     interface_back.Refresh_data_base_event(obj)
@@ -255,7 +282,7 @@ def Administrar_recursos():
             depen = st.multiselect('Dependencias', resources)
 
 
-            if st.button('save'):
+            if st.button('save', key= 'save1'):
                 result = True
 
                 #Validacion de la creacion del recurso:
@@ -312,7 +339,7 @@ def Administrar_recursos():
             collitions_del = st.multiselect('Eliminar coliciones', old_collitions, key= 'm3')
             depen_del = st.multiselect('Eliminar dependencias', old_depen, key= 'm4')
 
-            if st.button('save'):
+            if st.button('save', key= 'save2'):
                 result = True
 
                 collitions_real = old_collitions
@@ -364,11 +391,15 @@ def Administrar_recursos():
 
             if st.button('OK'):
                 result = True
+                b = False #Variable para unicamente que no te salga el cartel de error mas de una vez
                 for l in interface_back.dependencias_eventos_definidos:
+                    if b: break
                     for r in l:
                         if key3 == r:
                             result = False
                             st.error('No puedes eliminar un recurso de un evento inmutable')
+                            b = True
+                            
                 
                 if result:
                     r = interface_back.Refresh_data_base_logic(action, 'resources', key3)
@@ -569,9 +600,7 @@ def Visualizacion():
 
 def Info():
     st.header('Info de la Web')
-    st.markdown("""
-    En esta seccion podras obtener informacion del funcionamiento de la web (Un mini tutorial)
-    """)
+    
 ######################################################################################################################################################
 
 main()

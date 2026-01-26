@@ -21,10 +21,26 @@
         "Bus": [],
         "Enanos": [
             "ciberneticos"
-        ]
+        ],
+        "Articulos gamers": [
+            "prostitutas",
+            "Enanos"
+        ],
+        "Arquitecto": [],
+        "Obrero": [
+            "Articulos gamers"
+        ],
+        "Material de construccion": [
+            "Articulos gamers",
+            "Enanos"
+        ],
+        "Camion": [
+            "Enanos"
+        ],
+        "Economista": []
     },
     "resources": {
-        "mesas": 4,
+        "mesas": 20,
         "sillas": 12,
         "organizador": 15,
         "comida": 100,
@@ -34,7 +50,13 @@
         "ciberneticos": 10,
         "USD": 20,
         "Bus": 12,
-        "Enanos": 10
+        "Enanos": 10,
+        "Articulos gamers": 25,
+        "Arquitecto": 7,
+        "Obrero": 30,
+        "Material de construccion": 40,
+        "Camion": 3,
+        "Economista": 2
     },
     "depen_resources": {
         "mesas": [
@@ -61,183 +83,62 @@
         "USD": [],
         "Bus": [
             "USD",
-            "organizador"
+            "organizador",
+            "Chofer"
         ],
         "Enanos": [
+            "USD"
+        ],
+        "Articulos gamers": [
+            "mesas"
+        ],
+        "Arquitecto": [
+            "USD",
+            "mesas"
+        ],
+        "Obrero": [
+            "USD",
+            "comida"
+        ],
+        "Material de construccion": [
+            "Obrero",
+            "Arquitecto",
+            "mesas",
+            "USD"
+        ],
+        "Camion": [
+            "Chofer"
+        ],
+        "Economista": [
             "USD"
         ]
     },
     "events": [
         {
-            "name": "Espectaculo Humoristico",
-            "start_date": "9/1/2026",
-            "end_date": "9/1/2026",
+            "name": "Remodelacion",
+            "start_date": "3/1/2026",
+            "end_date": "12/1/2026",
             "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
+                "Obrero",
+                "Arquitecto",
+                "Material de construccion",
+                "Camion",
                 "USD",
-                "ciberneticos"
-            ],
-            "id": "01KF7J1RDXN5M52P340CSR0RFC"
-        },
-        {
-            "name": "P2",
-            "start_date": "9/1/2026",
-            "end_date": "17/1/2026",
-            "depen": [
-                "ingenieros",
-                "comida"
+                "guardias"
             ],
             "resources": [
                 "mesas",
                 "sillas",
                 "USD",
-                "ingenieros",
+                "Obrero",
+                "Arquitecto",
+                "Material de construccion",
+                "Camion",
+                "guardias",
+                "Chofer",
                 "comida"
             ],
-            "id": "01KF7J63V6VYAFN29PJ01XJF37"
-        },
-        {
-            "name": "P2",
-            "start_date": "16/1/2026",
-            "end_date": "31/1/2026",
-            "depen": [
-                "ingenieros",
-                "comida"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "USD",
-                "ingenieros",
-                "comida"
-            ],
-            "id": "01KF7J6MH2G3S1X8XSVB4KPSSS"
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "1/1/2026",
-            "end_date": "1/1/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "USD"
-            ],
-            "id": "01KFGQTVMHR843QC99GJ5AST2D"
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "1/1/2026",
-            "end_date": "1/1/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "USD"
-            ],
-            "id": "01KFGRF53K7HWEBGSE8E7J0WHV"
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "02/01/2026",
-            "end_date": "02/01/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "USD"
-            ],
-            "id": "01KFHBMRNYRPSYYPBDA2T8DZMW"
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "2/1/2026",
-            "end_date": "3/1/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "USD"
-            ],
-            "id": "01KFHBS7MNTMT1TVQ35F4WHMN6"
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "2/1/2026",
-            "end_date": "5/1/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "USD"
-            ],
-            "id": "01KFHBTQK2X9THPKSF534YHG2X"
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "2/1/2026",
-            "end_date": "5/1/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "USD"
-            ],
-            "id": "01KFHBTV68ZMY2TJD53NSGPN5A"
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "03/01/2026",
-            "end_date": "06/01/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "USD"
-            ],
-            "id": "01KFHBTZSM5X8SQHE5C7JP7QK1"
+            "id": "01KFWJHDJ7JZ7EYGPR2AZ2EPG2"
         }
     ]
 }

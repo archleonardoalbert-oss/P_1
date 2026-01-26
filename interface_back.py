@@ -322,6 +322,21 @@ def Try_event(event_type: str, start_date: str, end_date: str, resources: list, 
     elif event_type == 'Evento Cultural':
         validation = Validation(start_date, end_date, dependencias_eventos_definidos[1], resources)
 
+    elif event_type == 'Reunion de negocios':
+        validation = Validation(start_date, end_date, dependencias_eventos_definidos[2], resources)
+
+    elif event_type == 'Remodelacion':
+        validation = Validation(start_date, end_date, dependencias_eventos_definidos[3], resources)
+
+    elif event_type == 'Excurcion':
+        validation = Validation(start_date, end_date, dependencias_eventos_definidos[4], resources)
+
+    elif event_type == 'Torneo gamer':
+        validation = Validation(start_date, end_date, dependencias_eventos_definidos[5], resources)
+
+    elif event_type == 'Temporada de ofertas':
+        validation = Validation(start_date, end_date, dependencias_eventos_definidos[6], resources)
+
     elif event_type == 'Personalizado':
         validation = Validation(start_date, end_date, depen, resources)
     return validation.Details()

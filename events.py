@@ -33,6 +33,36 @@ class Evento_Cultural(Event):
     def __init__(self, start_date, end_date, resources, depen = depend, name = nam):
         super().__init__(start_date, end_date, resources, depen, name)
 
+class Reunion_De_Negocios(Event):
+    depend = dependencias_eventos_definidos[2]
+    nam = 'Reunion de Negocios'
+    def __init__(self, start_date, end_date, resources, depen = depend, name = nam):
+        super().__init__(start_date, end_date, resources, depen, name)
+
+class Remodelacion(Event):
+    depend = dependencias_eventos_definidos[3]
+    nam = 'Remodelacion'
+    def __init__(self, start_date, end_date, resources, depen = depend, name = nam):
+        super().__init__(start_date, end_date, resources, depen, name)
+
+class Excurcion(Event):
+    depend = dependencias_eventos_definidos[4]
+    nam = 'Excursion'
+    def __init__(self, start_date, end_date, resources, depen = depend, name = nam):
+        super().__init__(start_date, end_date, resources, depen, name)
+
+class Torneo_Gamer(Event):
+    depend = dependencias_eventos_definidos[5]
+    nam = 'Torneo Gamer'
+    def __init__(self, start_date, end_date, resources, depen = depend, name = nam):
+        super().__init__(start_date, end_date, resources, depen, name)
+
+class Temporada_De_Ofertas(Event):
+    depend = dependencias_eventos_definidos[6]
+    nam = 'Temporada de Ofertas'
+    def __init__(self, start_date, end_date, resources, depen = depend, name = nam):
+        super().__init__(start_date, end_date, resources, depen, name)
+
 class Evento_Personalizado(Event):
     def __init__(self, start_date, end_date, resources, depen, name):
         super().__init__(start_date, end_date, resources, depen, name)
