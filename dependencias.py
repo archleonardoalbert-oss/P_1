@@ -1,4 +1,4 @@
-dependencias_eventos_definidos = [['mesas', 'sillas', 'organizador'],
+dependencias_eventos_definidos = [['mesas', 'sillas', 'organizador', 'Enanos'],
                                   ['mesas', 'sillas', 'organizador', 'comida'],
                                   ['USD', 'mesas', 'organizador', 'comida', 'Bus'],
                                   ['Obrero', 'Arquitecto', 'Material de construccion', 'Camion', 'USD', 'guardias'],

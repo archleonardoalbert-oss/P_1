@@ -215,6 +215,9 @@ def Refresh_data_base_logic(action: str,typ: str, key, value: int = None, a: lis
         elif action == 'd':
             try:
                 del db_dict['collitions'][key]
+                for coll in db_dict['collitions'].values():
+                    if key in coll:
+                        coll.remove(key)
             except KeyError:
                 return False
         elif action == 'm':
@@ -234,6 +237,9 @@ def Refresh_data_base_logic(action: str,typ: str, key, value: int = None, a: lis
         elif action == 'd':
             try:
                 del db_dict['depen_resources'][key]
+                for dep in db_dict['depen_resources'].values():
+                    if key in dep:
+                        dep.remove(key)
             except KeyError:
                 return False
         elif action == 'm':
@@ -305,11 +311,11 @@ def Delete_event(ID: list):
     with open('Database.json', 'r', encoding = 'utf-8') as db:
         db_dict = json.load(db)
     
-    events = db_dict['events']
+    events, coll, dep = db_dict['events'], db_dict['collitions'], db_dict['depen_resources']
     for id in ID:
         for e in events:
             if id == e['id']:
-                events.remove(e)
+                events.remove(e)     
             
         with open('Database.json', 'w', encoding = 'utf-8') as db:
             json.dump(db_dict, db, indent = 4)
