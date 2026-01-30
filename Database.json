@@ -123,9 +123,69 @@
     },
     "events": [
         {
+            "name": "Espectaculo Humoristico",
+            "start_date": "1/1/2026",
+            "end_date": "1/1/2026",
+            "depen": [
+                "mesas",
+                "sillas",
+                "organizador",
+                "Enanos"
+            ],
+            "resources": [
+                "mesas",
+                "sillas",
+                "organizador",
+                "USD",
+                "Enanos"
+            ],
+            "id": "01KG7NZCQYDM1T00838YA5GG8E"
+        },
+        {
+            "name": "Evento Cultural",
+            "start_date": "2/1/2026",
+            "end_date": "2/1/2026",
+            "depen": [
+                "mesas",
+                "sillas",
+                "organizador",
+                "comida"
+            ],
+            "resources": [
+                "mesas",
+                "sillas",
+                "organizador",
+                "comida",
+                "USD"
+            ],
+            "id": "01KG7P7YK4ME86XC978MAHARGR"
+        },
+        {
+            "name": "Reunion de Negocios",
+            "start_date": "3/1/2026",
+            "end_date": "3/1/2026",
+            "depen": [
+                "USD",
+                "mesas",
+                "organizador",
+                "comida",
+                "Bus"
+            ],
+            "resources": [
+                "mesas",
+                "sillas",
+                "organizador",
+                "comida",
+                "USD",
+                "Bus",
+                "Chofer"
+            ],
+            "id": "01KG7P8WQT1RR601TDMDYES3NH"
+        },
+        {
             "name": "Remodelacion",
             "start_date": "3/1/2026",
-            "end_date": "12/1/2026",
+            "end_date": "3/1/2026",
             "depen": [
                 "Obrero",
                 "Arquitecto",
@@ -135,473 +195,97 @@
                 "guardias"
             ],
             "resources": [
-                "mesas",
-                "sillas",
+                "comida",
                 "USD",
-                "Obrero",
                 "Arquitecto",
+                "Obrero",
                 "Material de construccion",
                 "Camion",
-                "guardias",
                 "Chofer",
-                "comida"
+                "mesas",
+                "guardias",
+                "sillas"
             ],
-            "id": "01KFWJHDJ7JZ7EYGPR2AZ2EPG2"
+            "id": "01KG7PAXEMZ20TS0VXXK0NDJQZ"
         },
         {
-            "name": "After Logica",
-            "start_date": "27/1/2026",
-            "end_date": "27/1/2026",
+            "name": "Excursion",
+            "start_date": "4/1/2026",
+            "end_date": "4/1/2026",
+            "depen": [
+                "Bus",
+                "guardias",
+                "comida"
+            ],
+            "resources": [
+                "USD",
+                "Bus",
+                "Chofer",
+                "organizador",
+                "comida",
+                "guardias"
+            ],
+            "id": "01KG7PCVZTTBT8DFQK0DJ0GEWB"
+        },
+        {
+            "name": "Torneo Gamer",
+            "start_date": "5/1/2026",
+            "end_date": "5/1/2026",
+            "depen": [
+                "organizador",
+                "Articulos gamers",
+                "mesas",
+                "sillas",
+                "comida"
+            ],
+            "resources": [
+                "USD",
+                "Bus",
+                "organizador",
+                "mesas",
+                "sillas",
+                "Chofer",
+                "Articulos gamers",
+                "comida"
+            ],
+            "id": "01KG7PEJDZ8TT9KJBATXWBXAPN"
+        },
+        {
+            "name": "Temporada de Ofertas",
+            "start_date": "6/1/2026",
+            "end_date": "6/1/2026",
+            "depen": [
+                "USD",
+                "Economista",
+                "organizador"
+            ],
+            "resources": [
+                "USD",
+                "Economista",
+                "organizador"
+            ],
+            "id": "01KG7PFS0J5FJMC8FHSXMD5XN9"
+        },
+        {
+            "name": "P",
+            "start_date": "7/1/2026",
+            "end_date": "7/1/2026",
             "depen": [],
             "resources": [
-                "prostitutas",
-                "USD"
-            ],
-            "id": "01KFXJGYBX66WJW0MWXXR218X9"
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "1/1/2026",
-            "end_date": "1/1/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
                 "USD",
-                "organizador"
-            ],
-            "id": "01KFXK84ERR6HJ5F75PXSE0XDC"
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "1/1/2026",
-            "end_date": "1/1/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "USD",
-                "organizador"
-            ],
-            "id": "01KFXK8BAX0XN9RSAY9KKKPW0E"
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "1/1/2026",
-            "end_date": "1/1/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "USD",
-                "organizador"
-            ],
-            "id": "01KFXK8CB36YWCKSEAYR41EYPF"
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "1/1/2026",
-            "end_date": "1/1/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "USD",
-                "organizador"
-            ],
-            "id": "01KFXK8D6GZCEHF56XA1FEYED4"
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "1/1/2026",
-            "end_date": "1/1/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "USD",
-                "organizador"
-            ],
-            "id": "01KFXK8E3103H1WSPHHF0VSFQF"
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "1/1/2026",
-            "end_date": "1/1/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "USD",
-                "organizador"
-            ],
-            "id": "01KFXK8F0CBWZKW16RS5ARWK5E"
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "1/1/2026",
-            "end_date": "1/1/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "USD",
-                "organizador"
-            ],
-            "id": "01KFXK8FHD7CQFYRQKHM8R930H"
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "1/1/2026",
-            "end_date": "1/1/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "USD",
-                "organizador"
-            ],
-            "id": "01KFXK8FZ0EF8VYM0P24NBC1C4"
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "1/1/2026",
-            "end_date": "1/1/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "USD",
-                "organizador"
-            ],
-            "id": "01KFXK8GADAS9638F81BADM9EC"
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "1/1/2026",
-            "end_date": "1/1/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "USD",
-                "organizador"
-            ],
-            "id": "01KFXK8GN4BNW8T14KFDMKBHW9"
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "1/1/2026",
-            "end_date": "1/1/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "USD",
-                "organizador"
-            ],
-            "id": "01KFXK8H32FTFECDGSAW1BJGJX"
-        },
-        {
-            "name": "Espectaculo Humoristico",
-            "start_date": "1/1/2026",
-            "end_date": "1/1/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "USD",
-                "organizador"
-            ],
-            "id": "01KFXK8H8P390BVS3WM6YZYBXP"
-        },
-        {
-            "name": "Evento Cultural",
-            "start_date": "02/01/2026",
-            "end_date": "02/01/2026",
-            "depen": [
-                "mesas",
-                "sillas",
+                "Economista",
                 "organizador",
-                "comida"
-            ],
-            "resources": [
                 "mesas",
                 "sillas",
-                "organizador",
-                "USD",
-                "Enanos",
-                "comida"
+                "comida",
+                "guardias",
+                "ciberneticos",
+                "Bus",
+                "Articulos gamers",
+                "Arquitecto",
+                "Chofer"
             ],
-            "id": "01KG46RERX7A3KSEWM36WZ6CR7"
-        },
-        {
-            "name": "Evento Cultural",
-            "start_date": "02/01/2026",
-            "end_date": "02/01/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "comida"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "USD",
-                "Enanos",
-                "comida"
-            ],
-            "id": "01KG46WG21PJ75RPJTYHS6YXBC"
-        },
-        {
-            "name": "Evento Cultural",
-            "start_date": "02/01/2026",
-            "end_date": "02/01/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "comida"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "USD",
-                "Enanos",
-                "comida"
-            ],
-            "id": "01KG46WKRN9QV19MRDHBARQEP1"
-        },
-        {
-            "name": "Evento Cultural",
-            "start_date": "02/01/2026",
-            "end_date": "02/01/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "comida"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "USD",
-                "Enanos",
-                "comida"
-            ],
-            "id": "01KG46WNXF7QVWW7NRQ1M1TFTQ"
-        },
-        {
-            "name": "Evento Cultural",
-            "start_date": "02/01/2026",
-            "end_date": "02/01/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "comida"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "USD",
-                "Enanos",
-                "comida"
-            ],
-            "id": "01KG46WQRNF235R606AWFGMQY9"
-        },
-        {
-            "name": "Evento Cultural",
-            "start_date": "02/01/2026",
-            "end_date": "02/01/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "comida"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "USD",
-                "Enanos",
-                "comida"
-            ],
-            "id": "01KG46WS9T4ZH1MZEFVWPM45AK"
-        },
-        {
-            "name": "Evento Cultural",
-            "start_date": "02/01/2026",
-            "end_date": "02/01/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "comida"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "USD",
-                "Enanos",
-                "comida"
-            ],
-            "id": "01KG46WTP63P2355N1F5EZE615"
-        },
-        {
-            "name": "Evento Cultural",
-            "start_date": "02/01/2026",
-            "end_date": "02/01/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "comida"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "USD",
-                "Enanos",
-                "comida"
-            ],
-            "id": "01KG46WVYMVE39TCP2ZDMTATR0"
-        },
-        {
-            "name": "Evento Cultural",
-            "start_date": "02/01/2026",
-            "end_date": "02/01/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "comida"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "USD",
-                "Enanos",
-                "comida"
-            ],
-            "id": "01KG46WX8EFXN4JTTT2WP5GK2B"
-        },
-        {
-            "name": "Evento Cultural",
-            "start_date": "02/01/2026",
-            "end_date": "02/01/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "comida"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "USD",
-                "Enanos",
-                "comida"
-            ],
-            "id": "01KG46WYFE79X1VXPDKSQQK9PQ"
-        },
-        {
-            "name": "Evento Cultural",
-            "start_date": "03/01/2026",
-            "end_date": "03/01/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "comida"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "USD",
-                "Enanos",
-                "comida"
-            ],
-            "id": "01KG46WZR0QH102STJFBGBS7NT"
-        },
-        {
-            "name": "Evento Cultural",
-            "start_date": "03/01/2026",
-            "end_date": "03/01/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "comida"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "USD",
-                "Enanos",
-                "comida"
-            ],
-            "id": "01KG46X157J7B1HKHX6WSV053Q"
+            "id": "01KG7PHCEEHV1PPS535Z5W9SGD"
         }
     ]
 }

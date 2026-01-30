@@ -137,6 +137,7 @@ def Administrar():
                 st.session_state.Save = not st.session_state.Save
             
             if st.session_state.Save:
+                st.session_state.Save = not st.session_state.Save
                 validation = interface_back.Try_event(event_type, start_date, end_date, selected_resources, depe)
                 
                 onj = None
