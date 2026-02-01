@@ -1,0 +1,80 @@
+Dominio:
+    Mi proyecto se centra en la administracion de los eventos de un Hotele que llamamos LuxAlbert, basicamente puedes crear y eliminar eventos,
+    cada evento tiene unos recursos que necesita si o si para funcionar, luego hablaremos mas a detalle de eso, pero ademas de administrar los 
+    evetnos del hotel tambien podras administrar los recursos de este creandolos, eliminandolos (si no estan protegidos) y modificandolos, la pagina
+    ademas te permite visualizar los eventos que has creado y ver los detalles del mismo
+
+Eventos:
+    Los eventos los cree utilizando un poco de OOP, utilice clases abstractas para una clase Event mas generica (DRY) aunque realmente no 
+    aprovecho demaciado esta implementacioin puesto que los eventos son basicamente un objeto con atributos, sin metodos definitos excepto
+    __repr__ que lo implemente principalmente para facilitar el Debug aunque no lo he utilizado, igual pienso que el hecho de haber utilizado
+    OOP en el apartado de eventos no aporta demaciado pero tampoco le quita, de ehcho creo que hace el proyecto mucho mas escalable
+
+
+Validacion:
+    Para validar o no la creacion de un evento cree la clase Validation, la cual tiene vairos metodos que se encargan de partes concretas de esta 
+    validacion, por ejemplo hay un metodo para validar fechas (que esten escritas en el formato que espero y que sean validas), para verificar que
+    el evento tenga los recursos minimos que se definio para que funcionara, etc, el return de cada uno de estos metodos es uno de dos:
+    es o un valor booleano indicando que se valido o no ese aspecto del evento o una tupla (bool, list) que basicamente me permite en caso de que
+    ese aspecto a validar de el evento halla fallado tener mas detalles de por que fallo, dichos detalles se guardan en la lista dentro de la tupla,
+    por ejemplo, en caso de que el evento necesite 'mesas' y el usuario no las haya puesto el return de Check_min_resources seria: *(False, ['mesas])*,
+    posteriormetne toda esta informaacion al utilizo para mostrarle un mensaje al usuario de por que no se pudo crear su evento en caso de que haya
+    fallado algo (realmente creo que el formato de este mensaje de error se puede mejorar bastante, aunque asi esta bien)
+
+
+Dependencia y Colicion de recursos:
+    En el proyecto estos conceptos estan implementados de la siguiente manera:
+    em Database.json puedes ver unas claves llamadas 'collitions' y 'depn_resources', el valor asociado a estas claves son 2 diccionarios que contienen
+    basicamente la informacion de que recursos necesitan de cuales para poder ser utilizados y que recursos no pueden estar cono cuales para ser 
+    utilizados, se decidio agregar estos aspectos aparentemente estaticos del backend de la web a la base de datos para darle al usuario la oportunidad
+    de modificarlos y que la experiencia administrando el hotel sea mas completa y personalizada. Ademas internamente hay implementado un mecanismo de
+    verificacion que te impide crear o modificar un recurso para que este tenga un mismo recurso en sus coliciones y en sus dependencias
+
+
+Vsualizacion de eventos:
+    Para enriquecer la experiencia se decidio utilizar apra visualizar los eventos que ya se han creado streamlit_calendar, principalmente se decidio
+    hacerlo de esta manera por:
+    (1) estamos creando una pagina en streamlit_calendar
+    (2) por la afinidad que tiene la visualizacion de eventos en streamlit_calendar con la manera que teniamos de guardar los eventos en nuestra base 
+        de datos
+    Ademas de eso, la parte de visualizar los detalles de los eventos se implemento de la siguiente manera:
+    Luego de la visualizacion del calendario se crean 2 columnas, la izquierda para tener una tabla de todos los eventos que hay activos en el momento
+    y la derecha para al seleccionar uno de estos eventos que te muestre toda su informacion, para crear las tablas primero creamos los data_frames con pandas,
+    estos data frames solamente tienen el nombre, el color, la fecha y el id del evento, luego para el lado izquierdo se crea un 'data_frame_plus' que es como para
+    ponerle por encima del tata_frame una capa de CSS para poder visualziar en la casilla del color del evento el color en si y no solamente el codigo del color, ej '#00FF00'
+    ademas tambien implementa un rerun en la web al tocar cada la tabla en si, luego del lado derecho cuando tocas una fila concreta de la tabla se crea un nuevo data frame
+    aprovechando que obtuvimos al informacion del id del evento para saber exactamente cual evento es e ir a la base de datos (los eventos concretamente) y extraer los recursos y 
+    las dependecnias del mismo, agregarlas al data frame y ahora si crear la tabla, este data frame no esta estilizado, por eso se ven los codigos de los colores en vez 
+    de los colores en si
+
+
+Administracion de recursos:
+    A la hora de validar un evento un aspecto fundamental es saber si de los recursos que exige el usuario para su evento hay al menos una unidad de cada uno, esto se hace de la 
+    siguiente manera:
+    primero el usuario ingresa los recursos que quiere para su evento, la fecha de inicio de este y la fecha de fin (esta infromacion es suficiente para esta validacion), luego
+    con esta informacion la instancia de la clase Validation lo que hace es cargar todos los eventos de la base de datos y todos los recursos disponibles de la base de datos y basicamente
+    lo que se hace es recorrer todos los eventos con un for verificando si se cumple la condicion de que el intervalo del evento que stoy intentando crear tiene alguna colicion con el intervalo
+    del evento de la iteracion actual, de ser asi se regresa a la copia del diccionario de los recursos que descargue y se le restan todos los recursos que tiene programados el evento de la iteracion
+    actual, esto se repite hasta que no queden mas eventos, luego se verifica si en los recursos que quedaron hay los suficientes recursos como para crear el evento.
+    POTENCIAL MEJORA: Seria muy buneo ordrnar la lista de eventos por el intervalo de ocurrecnia de cada uno (se podria sacar un promedio de la fecha para tener un valor puntual en la linea 
+    temporal) y luego hacer una busqueda binaria para encontrar la familia de eventos que tienen alguna interseccion con el intervalo de ocurrencia de mi evento, de esta forma se optimizaria mucho
+    el tiempo de validacion de este aspecto
+
+
+Recomendacion inteligente de fecha:
+    La recomendacion inteligente de fechas funciona de la siguiente manera: 
+    Si en la creacion de tu evento fallo unicamente la disponibilidad de lso recursos en la fecha que lo quieres crear basicamente se utiliza + timedelta(days= 1) para mover en un dia el inicio
+    del intervalo y el fin del mosmo manteniendo la duracion del intervalor, leugo se intenta nuevamente crear el evento y si falla se repite el proceso hasta que no falle, en cuyo caso se 
+    habra encontrado la fecha a recomendar
+    POTENCIAL MEJORA: si los eventos estubieran ordenados por fecha como se menciona arriba se pudiera buscar un 'hueco' entre los eventos midiendo los saltos desde el fin del intervalo del evento
+    en el indice i hasta el inicio del intervalo del evento en el indici i + 1, de esta manera si este 'hueco' es mayor al intervalo del evento se puede recomendaar directamente colocar el evento
+    ahi (aunque perderia cercania con la fecha preferida por el ususario)
+
+
+Eliminar evento:
+    La eliminacion de los eventos se hace por el ID del mismo
+
+
+Info de la pagina:
+    La seccion de Info de la pagina la creare completamente con la IA (cosa que no he hecho con ninguna otra parte de mi proyecto) ya que creo que tambien es importante demostrar que el trabajo 
+    secundario se le puede descargar a la IA (si sabes lo que haces) sin afectar el curso que definiste para tu proyecto

@@ -44,7 +44,7 @@ class Validation():
         
         mistake = []
         for r in self.resources:
-            if all_resources[r] <= 0:
+            if all_resources[r] <= 0: #No deberia dar nueca < 0 pero por si acaso
                 result = False
                 mistake.append(r)
         

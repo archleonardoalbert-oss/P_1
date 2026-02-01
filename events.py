@@ -12,6 +12,7 @@ class Event(ABC):
 
     def __repr__(self):
         info = {
+            "name" : self.name,
             "start_date" : self.start_date,
             "end_date" : self.end_date,
             "depen" : self.depen,
