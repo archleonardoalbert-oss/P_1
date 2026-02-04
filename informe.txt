@@ -21,6 +21,9 @@ Validacion:
     posteriormetne toda esta informaacion al utilizo para mostrarle un mensaje al usuario de por que no se pudo crear su evento en caso de que haya
     fallado algo (realmente creo que el formato de este mensaje de error se puede mejorar bastante, aunque asi esta bien)
 
+    Nota: he cambiado el campo de entrada de la fecha del usuario a uno mas profesional, impidiendo que el usuario introduzca una decha imposible, 
+    de igual forma dejare la validacion de la fecha, ademas, la verificacion de que el intervalo sea valido sigue teniendo sentido
+
 
 Dependencia y Colicion de recursos:
     En el proyecto estos conceptos estan implementados de la siguiente manera:
@@ -78,3 +81,12 @@ Eliminar evento:
 Info de la pagina:
     La seccion de Info de la pagina la creare completamente con la IA (cosa que no he hecho con ninguna otra parte de mi proyecto) ya que creo que tambien es importante demostrar que el trabajo 
     secundario se le puede descargar a la IA (si sabes lo que haces) sin afectar el curso que definiste para tu proyecto
+
+
+ASPECTOS A MEJORAR:
+    1) El proyecto puede tener una mejora sustancial con respecto a la eficiencia, puesto que carga los datos de la base de datos demaciadas veces, esta esta mal 
+       ordenada, esto ultimo hace que tenga que analizar muchos mas datos de lo normal para obtener la informacion que quiero para por ejemplo validar un evento,
+       eso mezclado con la innecesaria cantidad de veces que cargo grandes secciones de la base de datos hacen que el rendimiento se vea grandemente golpeado
+
+    2) Con respecto al codigo, puedo y quizas lo haga implementar una mayor modularizacion, evitando codigos extremadamente largos y poco legibles, haciendo la aplicacion
+       en si mucho mas facil de depurar, ademas podria aumentar fuertemente la presencia de OOP haciendo mi proyecto considerablemente mas escalable

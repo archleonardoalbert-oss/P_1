@@ -143,41 +143,6 @@ class Validation():
 
         return result
 
-
-resources = {
-             "mesas" : 4,
-             "sillas" : 12,
-             "organizador" : 15,
-             "comida" : 10000,
-             "prostitutas" : 73,        #TENGO QUE HACER UNA IMPLEMENTACION PARA GASTAR MAS DE UN RECURSO A LA VEZ
-             "guardias" : 35,
-             "ingenieros" : 12,
-             "ciberneticos" : 20,
-             "USD" : 20 
-}
-collitions = {
-            "mesas" : (),
-            "sillas" : (),
-            "organizador" : ('ingenieros', 'prostitutas'),          #TENGO QUE IMPLEMENTAR UN MECANISMO PARA QUE UNOS RECURSOS DEPENDAN DE OTROS
-            "comida" : (),
-            "prostitutas" : ('ingenieros', 'ciberneticos'),
-            "guardias" : (),
-            "ingenieros" : (),
-            "ciberneticos" : ('ingenieros'),
-            "USD" : ()
-}
-depen_resources = {
-            "mesas" : ('sillas'),
-            "sillas" : ('mesas'),
-            "organizador" : ('USD'),
-            "comida" : (),
-            "prostitutas" : ('guardias'),
-            "guardias" : ('USD'),
-            "ingenieros" : ('USD', 'mesas'),
-            "ciberneticos" : ('USD', 'mesas'),
-            "USD" : ()
-}
-
 def Refresh_data_base_event(event):
     with open('Database.json', 'r', encoding= 'utf-8') as db:
         db_dict = json.load(db)

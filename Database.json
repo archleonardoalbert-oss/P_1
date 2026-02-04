@@ -123,66 +123,6 @@
     },
     "events": [
         {
-            "name": "Espectaculo Humoristico",
-            "start_date": "1/1/2026",
-            "end_date": "1/1/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "Enanos"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "USD",
-                "Enanos"
-            ],
-            "id": "01KG7NZCQYDM1T00838YA5GG8E"
-        },
-        {
-            "name": "Evento Cultural",
-            "start_date": "2/1/2026",
-            "end_date": "2/1/2026",
-            "depen": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "comida"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "comida",
-                "USD"
-            ],
-            "id": "01KG7P7YK4ME86XC978MAHARGR"
-        },
-        {
-            "name": "Reunion de Negocios",
-            "start_date": "3/1/2026",
-            "end_date": "3/1/2026",
-            "depen": [
-                "USD",
-                "mesas",
-                "organizador",
-                "comida",
-                "Bus"
-            ],
-            "resources": [
-                "mesas",
-                "sillas",
-                "organizador",
-                "comida",
-                "USD",
-                "Bus",
-                "Chofer"
-            ],
-            "id": "01KG7P8WQT1RR601TDMDYES3NH"
-        },
-        {
             "name": "Remodelacion",
             "start_date": "3/1/2026",
             "end_date": "3/1/2026",
@@ -207,25 +147,6 @@
                 "sillas"
             ],
             "id": "01KG7PAXEMZ20TS0VXXK0NDJQZ"
-        },
-        {
-            "name": "Excursion",
-            "start_date": "4/1/2026",
-            "end_date": "4/1/2026",
-            "depen": [
-                "Bus",
-                "guardias",
-                "comida"
-            ],
-            "resources": [
-                "USD",
-                "Bus",
-                "Chofer",
-                "organizador",
-                "comida",
-                "guardias"
-            ],
-            "id": "01KG7PCVZTTBT8DFQK0DJ0GEWB"
         },
         {
             "name": "Torneo Gamer",
@@ -286,6 +207,337 @@
                 "Chofer"
             ],
             "id": "01KG7PHCEEHV1PPS535Z5W9SGD"
+        },
+        {
+            "name": "#$%^& ",
+            "start_date": "2/2/1959",
+            "end_date": "2/2/2026",
+            "depen": [],
+            "resources": [
+                "Chofer",
+                "Economista",
+                "Camion",
+                "Material de construccion",
+                "Obrero",
+                "comida",
+                "USD",
+                "Arquitecto",
+                "mesas",
+                "sillas"
+            ],
+            "id": "01KGFN8Q70V0X8G5T43KV7MX4Q"
+        },
+        {
+            "name": "Espectaculo Humoristico",
+            "start_date": "04/02/2026",
+            "end_date": "04/02/2026",
+            "depen": [
+                "mesas",
+                "sillas",
+                "organizador",
+                "Enanos"
+            ],
+            "resources": [
+                "mesas",
+                "sillas",
+                "organizador",
+                "comida",
+                "Enanos",
+                "USD"
+            ],
+            "id": "01KGKK5RV8QT536XZF5FMC392A"
+        },
+        {
+            "name": "Prueba ok",
+            "start_date": "04/02/2026",
+            "end_date": "04/02/2026",
+            "depen": [],
+            "resources": [],
+            "id": "01KGKMBCVVS18CVGDE4XE5JVNK"
+        },
+        {
+            "name": "Prueba ok",
+            "start_date": "04/02/2026",
+            "end_date": "04/02/2026",
+            "depen": [],
+            "resources": [],
+            "id": "01KGKMBE15PBW1XKDAYNYP4H58"
+        },
+        {
+            "name": "Prueba ok",
+            "start_date": "04/02/2026",
+            "end_date": "04/02/2026",
+            "depen": [],
+            "resources": [],
+            "id": "01KGKMBEMZG7EJ58QFBSRDZA27"
+        },
+        {
+            "name": "Prueba ok",
+            "start_date": "04/02/2026",
+            "end_date": "04/02/2026",
+            "depen": [],
+            "resources": [],
+            "id": "01KGKMBF46JWTNJHCWHCDKPRBG"
+        },
+        {
+            "name": "Prueba ok",
+            "start_date": "04/02/2026",
+            "end_date": "04/02/2026",
+            "depen": [],
+            "resources": [],
+            "id": "01KGKMBFK0MK2B2GXYHX2Z6J8M"
+        },
+        {
+            "name": "Prueba ok",
+            "start_date": "04/02/2026",
+            "end_date": "04/02/2026",
+            "depen": [],
+            "resources": [
+                "sillas",
+                "mesas"
+            ],
+            "id": "01KGKMBV3KDVRS3CECAMKCD6AN"
+        },
+        {
+            "name": "Prueba ok",
+            "start_date": "04/02/2026",
+            "end_date": "04/02/2026",
+            "depen": [],
+            "resources": [
+                "sillas",
+                "mesas"
+            ],
+            "id": "01KGKMBVMJ7WWM4PGDWGC8M9QE"
+        },
+        {
+            "name": "Prueba ok",
+            "start_date": "04/02/2026",
+            "end_date": "04/02/2026",
+            "depen": [],
+            "resources": [
+                "sillas",
+                "mesas"
+            ],
+            "id": "01KGKMBW0G674MNMCQKMVJ9BFN"
+        },
+        {
+            "name": "Prueba ok",
+            "start_date": "04/02/2026",
+            "end_date": "04/02/2026",
+            "depen": [],
+            "resources": [
+                "sillas",
+                "mesas"
+            ],
+            "id": "01KGKMBWC392MAW7D2PE936AQ6"
+        },
+        {
+            "name": "Prueba ok",
+            "start_date": "04/02/2026",
+            "end_date": "04/02/2026",
+            "depen": [],
+            "resources": [
+                "sillas",
+                "mesas"
+            ],
+            "id": "01KGKMBWQ5WDDCWPE4VVYHNZ6F"
+        },
+        {
+            "name": "Prueba ok",
+            "start_date": "04/02/2026",
+            "end_date": "04/02/2026",
+            "depen": [],
+            "resources": [
+                "sillas",
+                "mesas"
+            ],
+            "id": "01KGKMBWWKPYGG4ZZ9A0952366"
+        },
+        {
+            "name": "Prueba ok",
+            "start_date": "04/02/2026",
+            "end_date": "04/02/2026",
+            "depen": [],
+            "resources": [
+                "sillas",
+                "mesas"
+            ],
+            "id": "01KGKMBX1G7RB15EVE7ZJWZHSJ"
+        },
+        {
+            "name": "Prueba ok",
+            "start_date": "04/02/2026",
+            "end_date": "04/02/2026",
+            "depen": [],
+            "resources": [
+                "sillas",
+                "mesas"
+            ],
+            "id": "01KGKMBX5BDMC7WYXE8R9HFZ2G"
+        },
+        {
+            "name": "Prueba ok",
+            "start_date": "04/02/2026",
+            "end_date": "04/02/2026",
+            "depen": [],
+            "resources": [
+                "sillas",
+                "mesas"
+            ],
+            "id": "01KGKMBXAEFCB7AGJHQC9VQQ39"
+        },
+        {
+            "name": "Prueba ok",
+            "start_date": "04/02/2026",
+            "end_date": "04/02/2026",
+            "depen": [],
+            "resources": [
+                "sillas",
+                "mesas"
+            ],
+            "id": "01KGKMBXG28EED3YV8DCGGNFF8"
+        },
+        {
+            "name": "Prueba ok",
+            "start_date": "04/02/2026",
+            "end_date": "04/02/2026",
+            "depen": [],
+            "resources": [
+                "sillas",
+                "mesas"
+            ],
+            "id": "01KGKMBXNE8H5DY1AY06N5MPH6"
+        },
+        {
+            "name": "Prueba ok",
+            "start_date": "05/02/2026",
+            "end_date": "05/02/2026",
+            "depen": [],
+            "resources": [
+                "sillas",
+                "mesas"
+            ],
+            "id": "01KGKNW6J8VJSGTZWPCE1C853C"
+        },
+        {
+            "name": "Prueba ok",
+            "start_date": "05/02/2026",
+            "end_date": "05/02/2026",
+            "depen": [],
+            "resources": [
+                "sillas",
+                "mesas"
+            ],
+            "id": "01KGKNWHC8R5D4YCB43PVS1036"
+        },
+        {
+            "name": "Prueba ok",
+            "start_date": "05/02/2026",
+            "end_date": "05/02/2026",
+            "depen": [],
+            "resources": [
+                "sillas",
+                "mesas",
+                "comida"
+            ],
+            "id": "01KGKNYN33B455DVCMDM4HEWVA"
+        },
+        {
+            "name": "Prueba ok",
+            "start_date": "05/02/2026",
+            "end_date": "05/02/2026",
+            "depen": [],
+            "resources": [
+                "sillas",
+                "mesas",
+                "comida"
+            ],
+            "id": "01KGKNZNRNARBX40E8JDM851AH"
+        },
+        {
+            "name": "Prueba ok",
+            "start_date": "05/02/2026",
+            "end_date": "05/02/2026",
+            "depen": [],
+            "resources": [
+                "sillas",
+                "mesas",
+                "comida"
+            ],
+            "id": "01KGKNZWQ1AYE3YCNGMJSN7D80"
+        },
+        {
+            "name": "Prueba ok",
+            "start_date": "05/02/2026",
+            "end_date": "05/02/2026",
+            "depen": [],
+            "resources": [
+                "sillas",
+                "mesas",
+                "comida"
+            ],
+            "id": "01KGKP019XYS4MQ6JTVWTM38VF"
+        },
+        {
+            "name": "Prueba ok",
+            "start_date": "05/02/2026",
+            "end_date": "05/02/2026",
+            "depen": [],
+            "resources": [
+                "sillas",
+                "mesas",
+                "comida"
+            ],
+            "id": "01KGKP0537VVRT63A2B0T5YN8F"
+        },
+        {
+            "name": "P ok 2",
+            "start_date": "05/02/2026",
+            "end_date": "05/02/2026",
+            "depen": [],
+            "resources": [
+                "mesas",
+                "sillas"
+            ],
+            "id": "01KGKP1P4GQ820821DY2QHXW1E"
+        },
+        {
+            "name": "P ok 2",
+            "start_date": "05/02/2026",
+            "end_date": "05/02/2026",
+            "depen": [],
+            "resources": [
+                "mesas",
+                "sillas"
+            ],
+            "id": "01KGKP1S6MEXCWW8R745SH86CT"
+        },
+        {
+            "name": "A",
+            "start_date": "04/02/2026",
+            "end_date": "19/02/2026",
+            "depen": [],
+            "resources": [],
+            "id": "01KGKRX0YM6VQ8W3HM4ZEM2XJ0"
+        },
+        {
+            "name": "",
+            "start_date": "04/02/2026",
+            "end_date": "04/02/2026",
+            "depen": [],
+            "resources": [],
+            "id": "01KGKSA9PT4WFS10GQAXQCT66S"
+        },
+        {
+            "name": "",
+            "start_date": "05/02/2026",
+            "end_date": "05/02/2026",
+            "depen": [],
+            "resources": [
+                "mesas",
+                "sillas"
+            ],
+            "id": "01KGKSATJKHYPVWW26AHFWDKD1"
         }
     ]
 }
