@@ -1,50 +1,50 @@
 Dominio:
-    Mi proyecto se centra en la administracion de los eventos de un Hotele que llamamos LuxAlbert, basicamente puedes crear y eliminar eventos,
-    cada evento tiene unos recursos que necesita si o si para funcionar, luego hablaremos mas a detalle de eso, pero ademas de administrar los 
-    evetnos del hotel tambien podras administrar los recursos de este creandolos, eliminandolos (si no estan protegidos) y modificandolos, la pagina
-    ademas te permite visualizar los eventos que has creado y ver los detalles del mismo
+    Mi proyecto se centra en la administración de los eventos de un Hotel que llamamos LuxAlbert, basícamente puedes crear y eliminar eventos,
+    cada evento tiene unos recursos que necesita sí o sí para funcionar, luego hablaremos más a detalle de eso, pero además de administrar los 
+    eventos del hotel también podrás administrar los recursos de este creándolos, eliminándolos (si no están protegidos) y modificándolos, la página
+    además te permite visualizar los eventos que has creado y ver los detalles del mismo
 
 Eventos:
-    Los eventos los cree utilizando un poco de OOP, utilice clases abstractas para una clase Event mas generica (DRY) aunque realmente no 
-    aprovecho demaciado esta implementacioin puesto que los eventos son basicamente un objeto con atributos, sin metodos definitos excepto
-    __repr__ que lo implemente principalmente para facilitar el Debug aunque no lo he utilizado, igual pienso que el hecho de haber utilizado
-    OOP en el apartado de eventos no aporta demaciado pero tampoco le quita, de ehcho creo que hace el proyecto mucho mas escalable
+    Los eventos los creé utilizando un poco de POO, utilicé clases abstractas para una clase Event más genérica (DRY) aunque realmente no 
+    aproveché demasiado esta implementación puesto que los eventos son básicamente un objeto con atributos, sin métodos definidos excepto
+    __repr__ que lo implementé principalmente para facilitar el Debug aunque no lo he utilizado, igual pienso que el hecho de haber utilizado
+    POO en el apartado de eventos no aporta demasiado pero tampoco le quita, de hecho creo que hace el proyecto mucho más escalable
 
 
-Validacion:
-    Para validar o no la creacion de un evento cree la clase Validation, la cual tiene vairos metodos que se encargan de partes concretas de esta 
-    validacion, por ejemplo hay un metodo para validar fechas (que esten escritas en el formato que espero y que sean validas), para verificar que
-    el evento tenga los recursos minimos que se definio para que funcionara, etc, el return de cada uno de estos metodos es uno de dos:
-    es o un valor booleano indicando que se valido o no ese aspecto del evento o una tupla (bool, list) que basicamente me permite en caso de que
-    ese aspecto a validar de el evento halla fallado tener mas detalles de por que fallo, dichos detalles se guardan en la lista dentro de la tupla,
-    por ejemplo, en caso de que el evento necesite 'mesas' y el usuario no las haya puesto el return de Check_min_resources seria: *(False, ['mesas])*,
-    posteriormetne toda esta informaacion al utilizo para mostrarle un mensaje al usuario de por que no se pudo crear su evento en caso de que haya
-    fallado algo (realmente creo que el formato de este mensaje de error se puede mejorar bastante, aunque asi esta bien)
+Validación:
+    Para validar o no la creación de un evento creé la clase Validation, la cual tiene varios métodos que se encargan de partes concretas de esta 
+    validación, por ejemplo hay un método para validar fechas (que estén escritas en el formato que espero y que sean válidas), para verificar que
+    el evento tenga los recursos mínimos que se definió para que funcionara, etc, el return de cada uno de estos métodos es uno de dos:
+    es o un valor booleano indicando que se validó o no ese aspecto del evento o una tupla (bool, list) que basícamente me permite en caso de que
+    ese aspecto a validar del evento haya fallado tener más detalles de por qué falló, dichos detalles se guardan en la lista dentro de la tupla,
+    por ejemplo, en caso de que el evento necesite 'mesas' y el usuario no las haya puesto el return de Check_min_resources sería: *(False, ['mesas])*,
+    posteriormente toda esta información la utilizo para mostrarle un mensaje al usuario de por qué no se pudo crear su evento en caso de que haya
+    fallado algo (realmente creo que el formato de este mensaje de error se puede mejorar bastante, aunque así está bien)
 
-    Nota: he cambiado el campo de entrada de la fecha del usuario a uno mas profesional, impidiendo que el usuario introduzca una decha imposible, 
-    de igual forma dejare la validacion de la fecha, ademas, la verificacion de que el intervalo sea valido sigue teniendo sentido
-
-
-Dependencia y Colicion de recursos:
-    En el proyecto estos conceptos estan implementados de la siguiente manera:
-    em Database.json puedes ver unas claves llamadas 'collitions' y 'depn_resources', el valor asociado a estas claves son 2 diccionarios que contienen
-    basicamente la informacion de que recursos necesitan de cuales para poder ser utilizados y que recursos no pueden estar cono cuales para ser 
-    utilizados, se decidio agregar estos aspectos aparentemente estaticos del backend de la web a la base de datos para darle al usuario la oportunidad
-    de modificarlos y que la experiencia administrando el hotel sea mas completa y personalizada. Ademas internamente hay implementado un mecanismo de
-    verificacion que te impide crear o modificar un recurso para que este tenga un mismo recurso en sus coliciones y en sus dependencias
+    Nota: he cambiado el campo de entrada de la fecha del usuario a uno más profesional, impidiendo que el usuario introduzca una fecha imposible, 
+    de igual forma dejaré la validación de la fecha, además, la verificación de que el intervalo sea válido sigue teniendo sentido
 
 
-Vsualizacion de eventos:
-    Para enriquecer la experiencia se decidio utilizar apra visualizar los eventos que ya se han creado streamlit_calendar, principalmente se decidio
+Dependencia y Colisión de recursos:
+    En el proyecto estos conceptos están implementados de la siguiente manera:
+    En Database.json puedes ver unas claves llamadas 'collitions' y 'depn_resources', el valor asociado a estas claves son 2 diccionarios que contienen
+    básicamente la información de qué recursos necesitan de cuáles para poder ser utilizados y qué recursos no pueden estar con cuáles para ser 
+    utilizados, se decidió agregar estos aspectos aparentemente estáticos del backend de la web a la base de datos para darle al usuario la oportunidad
+    de modificarlos y que la experiencia administrando el hotel sea más completa y personalizada. Además internamente hay implementado un mecanismo de
+    verificación que te impide crear o modificar un recurso para que este tenga un mismo recurso en sus colisiones y en sus dependencias
+
+
+Visualización de eventos:
+    Para enriquecer la experiencia se decidió utilizar para visualizar los eventos que ya se han creado streamlit_calendar, principalmente se decidió
     hacerlo de esta manera por:
     (1) estamos creando una pagina en streamlit_calendar
-    (2) por la afinidad que tiene la visualizacion de eventos en streamlit_calendar con la manera que teniamos de guardar los eventos en nuestra base 
+    (2) por la afinidad que tiene la visualización de eventos en streamlit_calendar con la manera que teníamos de guardar los eventos en nuestra base 
         de datos
-    Ademas de eso, la parte de visualizar los detalles de los eventos se implemento de la siguiente manera:
-    Luego de la visualizacion del calendario se crean 2 columnas, la izquierda para tener una tabla de todos los eventos que hay activos en el momento
-    y la derecha para al seleccionar uno de estos eventos que te muestre toda su informacion, para crear las tablas primero creamos los data_frames con pandas,
+    Además de eso, la parte de visualizar los detalles de los eventos se implementó de la siguiente manera:
+    Luego de la visualización del calendario se crean 2 columnas, la izquierda para tener una tabla de todos los eventos que hay activos en el momento
+    y la derecha para al seleccionar uno de estos eventos que te muestre toda su información, para crear las tablas primero creamos los data_frames con pandas,
     estos data frames solamente tienen el nombre, el color, la fecha y el id del evento, luego para el lado izquierdo se crea un 'data_frame_plus' que es como para
-    ponerle por encima del tata_frame una capa de CSS para poder visualziar en la casilla del color del evento el color en si y no solamente el codigo del color, ej '#00FF00'
+    ponerle por encima del dataframe una capa de CSS para poder visualizar en la casilla del color del evento el color en sí y no solamente el código del color, ej '#00FF00'
     ademas tambien implementa un rerun en la web al tocar cada la tabla en si, luego del lado derecho cuando tocas una fila concreta de la tabla se crea un nuevo data frame
     aprovechando que obtuvimos al informacion del id del evento para saber exactamente cual evento es e ir a la base de datos (los eventos concretamente) y extraer los recursos y 
     las dependecnias del mismo, agregarlas al data frame y ahora si crear la tabla, este data frame no esta estilizado, por eso se ven los codigos de los colores en vez 
