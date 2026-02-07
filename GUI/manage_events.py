@@ -2,7 +2,7 @@ import streamlit as st
 import interface_back
 from interface_back import events
 import datetime
-from datetime import timedelta
+from datetime import timedelta, datetime
 from datetime import date
 from pathlib import Path
 import sys
@@ -59,7 +59,7 @@ def Administrar():
         #Crear
         if st.session_state.Crear:
 
-            name = None
+            name = 'Personalizado'
             depe = None
             
             st.session_state['typ'] = st.selectbox(
@@ -102,107 +102,57 @@ def Administrar():
                 name = st.text_input('Nombre del evento')
                 depe = st.multiselect('Que recursos necesita tu evento ?', options= total_resources)
             
-            if 'Save' not in st.session_state:
-                st.session_state.Save = False
+            if st.button('Guardar'):
+                for i in range(stack):
+                    st.session_state.Critic = True
+                    result = interface_back.Button_save_func(start_date, end_date, event_type, depe, selected_resources, name)
+                    if result[0] == 'suggested':
+                        date_suggested = interface_back.Find_Date(event_type, start_date, end_date, selected_resources, depe)
 
-            if st.button('Save'):
-                st.session_state.Save = not st.session_state.Save
-            
-            if st.session_state.Save:
-                st.session_state.Save = not st.session_state.Save
-                validation = st.session_state.Validation =  interface_back.Try_event(event_type, start_date, end_date, selected_resources, depe)
-                
-                onj = None
+                        message = result[1].replace('()', f'{date_suggested}'.replace(',', ' --> '))
+                        st.warning(message)
 
-                for m in range(stack):
-                    st.session_state.Stack_pass = m #Para mantener informacion global sobre que tanto se ha recorrido del stack 
-                    validation = interface_back.Try_event(event_type, start_date, end_date, selected_resources, depe)
-
-                    if validation[-1]:
-                        if event_type == e1:
-                            obj = events.Espectaculo_Humoristico(start_date, end_date, selected_resources)
-                        elif event_type == e2:
-                            obj = events.Evento_Cultural(start_date, end_date, selected_resources)
-                        elif event_type == e3:
-                            obj = events.Reunion_De_Negocios(start_date, end_date, selected_resources)
-                        elif event_type == e4:
-                            obj = events.Remodelacion(start_date, end_date, selected_resources)
-                        elif event_type == e5:
-                            obj = events.Excurcion(start_date, end_date, selected_resources)
-                        elif event_type == e6:
-                            obj = events.Torneo_Gamer(start_date, end_date, selected_resources)
-                        elif event_type == e7:
-                            obj = events.Temporada_De_Ofertas(start_date, end_date, selected_resources)
-                        elif event_type == e8:
-                            obj = events.Evento_Personalizado(start_date, end_date, selected_resources, depe, name)
-                        
-                        interface_back.Refresh_data_base_event(obj)
-                        st.success('Evento agregado exitosamente')
-
-                        if not stack == 1:
-                            start_date = datetime.datetime.strptime(start_date, '%d/%m/%Y') + timedelta(days= periodicity)
-                            start_date = start_date.strftime('%d/%m/%Y')
-
-                            end_date = datetime.datetime.strptime(end_date, '%d/%m/%Y') + timedelta(days= periodicity)
-                            end_date = end_date.strftime('%d/%m/%Y')
-                    
-                    if validation[4] and validation[0][0] and validation[1][0] and validation[2][0] and not validation[3][0]:
-                        st.session_state.Ok = True
+                        st.session_state.modified_events.append({
+                                'sd': date_suggested[0],
+                                'ed': date_suggested[1],
+                                'ty': event_type, 
+                                'dp': depe,
+                                're': selected_resources,
+                                   'na': name})                
+                    elif result[0] != 'success' :
+                        st.error(result[1])
+                        st.session_state.Critic = False
                         break
-                    
-                    elif not validation[4] or not validation[0][0] or not validation[1][0] or not validation[2][0] or not validation[3][0]:
-                        depen_resources = ''
-                        #Preparando el str de las dependencias de recursos fallidas si es que las hay
-                        for c in validation[2][1]:
-                            for r in validation[2][2]:
-                                depen_resources += f'                                     {c}  <-//-  {r} \n\r'
 
-                        message = f'''Ha ocurrido un error: 
-                        
+                    start_date = datetime.strptime(start_date, '%d/%m/%Y') + timedelta(days= periodicity)
+                    start_date = start_date.strftime('%d/%m/%Y')
 
-                        
-            -Recursos minimos necesarios: {validation[0]}\n\r
-            -Coliciones entre recursos: {validation[1]}\n\r
-            -Las dependencias de los recursos fallidas: \n{depen_resources} \n\r
-            -Insuficiencia de recursos globales: {validation[3]} \n\r
-            -Validez de intervalo de fecha: {validation[4]}
-                        '''
-
-                        #Estilizando mensaje
-                        message = message.replace('[', '').replace(']', '').replace("'", '').replace('False', 'Error').replace('True', 'Ok').replace('Ok, ', 'Ok').replace('Error, ', 'Error: ')
-                        st.error(message)
+                    end_date = datetime.strptime(end_date, '%d/%m/%Y') + timedelta(days= periodicity)
+                    end_date = end_date.strftime('%d/%m/%Y')
                 
-                #IMPLEMENTAR PROGRAMACION DE EVENTOS POR STACK IGUALMENTE EN LA SUGERENCIA
-                if st.session_state.Ok:
-                        validation = st.session_state.Validation
-                        #for m in range(st.session_state.Stack - st.session_state.Stack_pass):
-                        suggested_date = interface_back.Find_Date(event_type, start_date, end_date, selected_resources, depe)
+                else:
+                    st.success('Accion ejecutada con exito')
+                    st.session_state.Critic = False
 
-                        if not suggested_date == False:
-                            st.warning(f"""Para la fecha que requiere su evento no tenemos dsponibles los recursos ({validation[3][1]}).\r\n
-        Le sugerimos que planifique el evento en la siguiente fecha disponible ({suggested_date})""")
-                            
-                            if event_type == e1:
-                                obj = events.Espectaculo_Humoristico(suggested_date[0], suggested_date[1], selected_resources)
-                            elif event_type == e2:
-                                obj = events.Evento_Cultural(suggested_date[0], suggested_date[1], selected_resources)
-                            elif event_type == e3:
-                                obj = events.Reunion_De_Negocios(suggested_date[0], suggested_date[1], selected_resources)
-                            elif event_type == e4:
-                                obj = events.Remodelacion(suggested_date[0], suggested_date[1], selected_resources)
-                            elif event_type == e5:
-                                obj = events.Excurcion(suggested_date[0], suggested_date[1], selected_resources)
-                            elif event_type == e6:
-                                obj = events.Torneo_Gamer(suggested_date[0], suggested_date[1], selected_resources)
-                            elif event_type == e7:
-                                obj = events.Temporada_De_Ofertas(suggested_date[0], suggested_date[1], selected_resources)
-                            elif event_type == e8:
-                                obj = events.Evento_Personalizado(suggested_date[0], suggested_date[1], selected_resources, depe, name)
+            if len(st.session_state.modified_events) > 0:
+                if st.button('Aceptar sugerencias'):
+                    for e in st.session_state.modified_events:
+                        interface_back.Button_save_func(
+                            e['sd'],
+                            e['ed'],
+                            e['ty'],
+                            e['dp'],
+                            e['re'],
+                            e['na']
+                        )
 
-                            if st.button('Ok', key= 'confirmar_fecha_sugerida'):
-                                st.session_state.Ok = False
-                                interface_back.Refresh_data_base_event(obj)
-                                st.rerun()
+                        st.session_state.modified_events.remove(e)
+                    st.rerun()
+
+                if st.button('Rechazar sugerencias'):
+                    st.session_state.modified_events = []
+                    st.rerun()
+
 
 
         #Eliminar
@@ -226,6 +176,9 @@ def Administrar():
                 interface_back.Delete_event(id)
                 st.rerun()
 
+
+            if st.button('Limpiar eventos'):
+                interface_back.Delete_all_events()
     
 
 

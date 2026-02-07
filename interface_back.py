@@ -4,6 +4,14 @@ from datetime import datetime as date, timedelta
 from dependencias import *
 import ulid
 
+e1 = 'Espectaculo Humoristico'
+e2 = 'Evento Cultural'
+e3 = 'Reunion de negocios'
+e4 = 'Remodelacion'
+e5 = 'Excurcion'
+e6 = 'Torneo gamer'
+e7 = 'Temporada de ofertas'
+e8 = 'Personalizado'
 
 class Validation(): 
     def __init__(self, s_d, e_d, depe, resources):
@@ -286,7 +294,17 @@ def Delete_event(ID: list):
             json.dump(db_dict, db, indent = 4)
 
 
-def Try_event(event_type: str, start_date: str, end_date: str, resources: list,  depen: list) -> bool:
+def Delete_all_events():
+    with open('Database.json', 'r', encoding= 'utf-8') as db:
+        db_dict = json.load(db)
+
+    db_dict['events'] = []
+
+
+    with open('Database.json', 'w', encoding = 'utf-8') as db:
+            json.dump(db_dict, db, indent = 4)
+
+def Try_event(event_type: str, start_date: str, end_date: str, resources: list,  depen: list) -> list:
     if event_type == 'Espectaculo Humoristico':
         validation = Validation(start_date, end_date, dependencias_eventos_definidos[0], resources)
     
@@ -331,3 +349,64 @@ def Find_Date(event_type: str, start_date: str, end_date: str, resources: list, 
     return (start_date, end_date)
 
     
+def Button_save_func(sd: str, ed: str, ty: str, depe: list, re: list, name: str) -> tuple:
+                validation = Try_event(ty, sd, ed, re, depe)
+                
+                onj = None
+
+                if validation[-1]:
+                    if ty == e1:
+                        obj = events.Espectaculo_Humoristico(sd, ed, re)
+                    elif ty == e2:
+                        obj = events.Evento_Cultural(sd, ed, re)
+                    elif ty == e3:
+                        obj = events.Reunion_De_Negocios(sd, ed, re)
+                    elif ty == e4:
+                        obj = events.Remodelacion(sd, ed, re)
+                    elif ty == e5:
+                        obj = events.Excurcion(sd, ed, re)
+                    elif ty == e6:
+                        obj = events.Torneo_Gamer(sd, ed, re)
+                    elif ty == e7:
+                        obj = events.Temporada_De_Ofertas(sd, ed, re)
+                    elif ty == e8:
+                        obj = events.Evento_Personalizado(sd, ed, re, depe, name)
+                    
+                    Refresh_data_base_event(obj)
+                    return ('success',)
+                    #ESTO VA PARA EL FRONT
+                    #st.success('Evento agregado exitosamente')
+                    # if not stack == 1:
+                    #     start_date = datetime.datetime.strptime(start_date, '%d/%m/%Y') + timedelta(days= periodicity)
+                    #     start_date = start_date.strftime('%d/%m/%Y')
+                    #     end_date = datetime.datetime.strptime(end_date, '%d/%m/%Y') + timedelta(days= periodicity)
+                    #     end_date = end_date.strftime('%d/%m/%Y')
+                
+                elif validation[4] and validation[0][0] and validation[1][0] and validation[2][0] and not validation[3][0]:
+                    message = f"""Para la fecha que requiere su evento no tenemos dsponibles los recursos ({validation[3][1]}).\r\n
+        Le sugerimos que planifique el evento en la siguiente fecha disponible ())"""
+                    return ('suggested', message)
+                    
+                
+                elif not validation[4] or not validation[0][0] or not validation[1][0] or not validation[2][0] or not validation[3][0]:
+                    depen_resources = ''
+                    #Preparando el str de las dependencias de recursos fallidas si es que las hay
+                    for c in validation[2][1]:
+                        for r in validation[2][2]:
+                            depen_resources += f'                                     {c}  <-//-  {r} \n\r'
+                    message = f'''Ha ocurrido un error: 
+                        
+
+                        
+            -Recursos minimos necesarios: {validation[0]}\n\r
+            -Coliciones entre recursos: {validation[1]}\n\r
+            -Las dependencias de los recursos fallidas: \n{depen_resources} \n\r
+            -Insuficiencia de recursos globales: {validation[3]} \n\r
+            -Validez de intervalo de fecha: {validation[4]}
+                        '''
+
+                        #Estilizando mensaje
+                    message = message.replace('[', '').replace(']', '').replace("'", '').replace('False', 'Error').replace('True', 'Ok').replace('Ok, ', 'Ok').replace('Error, ', 'Error: ')
+                    return ('error', message)
+
+

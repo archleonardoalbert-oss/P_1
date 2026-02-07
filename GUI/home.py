@@ -3,7 +3,7 @@ from pathlib import Path
 
 
 def Inicio():
-    st.session_state.Save = False
+    st.session_state.Critic = False
     st.header('Bienvenido a LuxAlbert Hotel')
     st.video(
         'Media/Luxury.mp4',

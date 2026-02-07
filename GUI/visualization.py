@@ -10,7 +10,7 @@ ruta_base = Path(__file__).parent.parent  # Esto te lleva a P_1
 sys.path.insert(0, str(ruta_base))
 
 def Visualizacion():
-    st.session_state.Save = False
+    st.session_state.Critic = False
     st.header('Visualizacion')
 
     #Eventos que se visualizaran en el calendario

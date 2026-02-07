@@ -3,7 +3,7 @@ import streamlit as st
 
 
 def Info():
-    st.session_state.Save = False
+    st.session_state.Critic = False
     
     # Encabezado principal del tutorial
     st.markdown(""".
