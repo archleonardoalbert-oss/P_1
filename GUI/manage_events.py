@@ -59,7 +59,7 @@ def Administrar():
         #Crear
         if st.session_state.Crear:
 
-            name = 'Personalizado'
+            name = None
             depe = None
             
             st.session_state['typ'] = st.selectbox(
@@ -77,19 +77,21 @@ def Administrar():
                   value= date.today(),
                     format= 'DD/MM/YYYY').strftime('%d/%m/%Y')
             
-            periodicity = st.number_input(
-                'Personalice la periodicidad de su evento (dias)',
-                value= 1,
-                step= 1,
-                min_value= 1
-            )
-
-            stack = st.session_state.Stack = st.number_input(
-                'Especifique la cantidad de ciclos de su evento',
-                value= 1,
-                step= 1,
-                min_value= 1
-            )
+            c = st.columns([1, 1])
+            with c[0]:
+                periodicity = st.number_input(
+                    'Personalice la periodicidad de su evento (dias)',
+                    value= 1,
+                    step= 1,
+                    min_value= 1
+                )
+            with c[1]:
+                stack = st.session_state.Stack = st.number_input(
+                    'Especifique la cantidad de ciclos de su evento',
+                    value= 1,
+                    step= 1,
+                    min_value= 1
+                )
 
             
             selected_resources = st.multiselect(
@@ -103,55 +105,83 @@ def Administrar():
                 depe = st.multiselect('Que recursos necesita tu evento ?', options= total_resources)
             
             if st.button('Guardar'):
-                for i in range(stack):
-                    st.session_state.Critic = True
-                    result = interface_back.Button_save_func(start_date, end_date, event_type, depe, selected_resources, name)
-                    if result[0] == 'suggested':
-                        date_suggested = interface_back.Find_Date(event_type, start_date, end_date, selected_resources, depe)
+                validation_main = interface_back.Try_event(event_type, start_date, end_date, selected_resources, depe)
+                events_list = []
+                st.session_state.modified_events = []
+                only_global_resources = validation_main[0][0] and validation_main[1][0] and validation_main[2][0] and validation_main[4] and not validation_main[3][0]
+                old_events = interface_back.Load_date_base('events')
 
-                        message = result[1].replace('()', f'{date_suggested}'.replace(',', ' --> '))
-                        st.warning(message)
+                if validation_main[-1] or only_global_resources:
+                    for i in range(stack):
+                        st.success('Entro en el bucle')
+                        event_attributes = {
+                            'sd': start_date,
+                            'ed': end_date,
+                            'dp': depe,
+                            're': selected_resources,
+                            'na': name,
+                            'ty': event_type
+                        }
+                        
+                        
+                        if not interface_back.Try_event_shadow(event_attributes, total_resources, old_events)[0]: #El problema se da en esta verificacion
+                            nice_dates = interface_back.Find_Date(event_attributes['ty'], event_attributes['sd'], event_attributes['ed'], event_attributes['re'], event_attributes['dp'])
+                            st.warning(f'''La fecha en la que se ha intentado crear el evento esta ocupada, insuficiencia de los \n\r
+                                       recursos {interface_back.Try_event_shadow(event_attributes[1])}, le recomendaremos \n\r
+                                       la fecha ({nice_dates[0]} --> {nice_dates[1]}) en la cual se ecnuentran disponibles dichos \n\r
+                                       recursos''')
+                            
+                            event_attributes['sd'] = nice_dates[0]
+                            event_attributes['ed'] = nice_dates[1]
+                            st.session_state.modified_events.append(event_attributes.copy())
 
-                        st.session_state.modified_events.append({
-                                'sd': date_suggested[0],
-                                'ed': date_suggested[1],
-                                'ty': event_type, 
-                                'dp': depe,
-                                're': selected_resources,
-                                   'na': name})                
-                    elif result[0] != 'success' :
-                        st.error(result[1])
-                        st.session_state.Critic = False
-                        break
 
-                    start_date = datetime.strptime(start_date, '%d/%m/%Y') + timedelta(days= periodicity)
-                    start_date = start_date.strftime('%d/%m/%Y')
+                        else:
+                            st.success('Comnezo a agregar los atributos a la lista')
+                            events_list.append(event_attributes.copy())
+                            st.success('Agrego los atributos a la lista')
 
-                    end_date = datetime.strptime(end_date, '%d/%m/%Y') + timedelta(days= periodicity)
-                    end_date = end_date.strftime('%d/%m/%Y')
-                
+                        #Modificando fecha
+                        start_date = datetime.strptime(start_date, '%d/%m/%Y') + timedelta(days= periodicity)
+                        start_date = start_date.strftime('%d/%m/%Y')
+                        end_date = datetime.strptime(end_date, '%d/%m/%Y') + timedelta(days= periodicity)
+                        end_date = end_date.strftime('%d/%m/%Y')
+
+                    #Cuando termine el bucle:
+                    else:
+                        st.success('Llego a la parte de guardar eventos')
+                        interface_back.Button_save_func(events_list)
+
                 else:
-                    st.success('Accion ejecutada con exito')
-                    st.session_state.Critic = False
+                    depen_resources = ''
+                    for c in validation_main[2][1]:
+                        for r in validation_main[2][2]:
+                            depen_resources += f'                                     {c}  <-//-  {r} \n\r'
+                    message = f'''Ha ocurrido un error: 
+                        
+                        
+            -Recursos minimos necesarios: {validation_main[0]}\n\r
+            -Coliciones entre recursos: {validation_main[1]}\n\r
+            -Las dependencias de los recursos fallidas: \n{depen_resources} \n\r
+            -Insuficiencia de recursos globales: {validation_main[3]} \n\r
+            -Validez de intervalo de fecha: {validation_main[4]}
+                        '''
+                        #Estilizando mensaje
+                    message = message.replace('[', '').replace(']', '').replace("'", '').replace('False', 'Error').replace('True', 'Ok').replace('Ok, ', 'Ok').replace('Error, ', 'Error: ')
 
-            if len(st.session_state.modified_events) > 0:
-                if st.button('Aceptar sugerencias'):
-                    for e in st.session_state.modified_events:
-                        interface_back.Button_save_func(
-                            e['sd'],
-                            e['ed'],
-                            e['ty'],
-                            e['dp'],
-                            e['re'],
-                            e['na']
-                        )
+                    st.error(message)
 
-                        st.session_state.modified_events.remove(e)
-                    st.rerun()
 
-                if st.button('Rechazar sugerencias'):
-                    st.session_state.modified_events = []
-                    st.rerun()
+                if len(st.session_state.modified_events) > 0:
+                    if st.button('Aceptar sugerencias'):
+                        for e in st.session_state.modified_events:
+                            interface_back.Button_save_func(st.session_state.modified_events)
+                            st.session_state.modified_events = []
+                        st.rerun()
+
+                    if st.button('Rechazar sugerencias'):
+                        st.session_state.modified_events = []
+                        st.rerun()
 
 
 

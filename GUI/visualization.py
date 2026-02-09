@@ -12,6 +12,7 @@ sys.path.insert(0, str(ruta_base))
 def Visualizacion():
     st.session_state.Critic = False
     st.header('Visualizacion')
+    pd.set_option("styler.render.max_elements", 9999999999)
 
     #Eventos que se visualizaran en el calendario
     events = interface_back.Refresh_visualization()

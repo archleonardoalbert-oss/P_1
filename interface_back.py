@@ -151,18 +151,23 @@ class Validation():
 
         return result
 
-def Refresh_data_base_event(event):
+def Refresh_data_base_event(events_input: list[dict]):
     with open('Database.json', 'r', encoding= 'utf-8') as db:
         db_dict = json.load(db)
 
     events = db_dict['events']
-    event_dict = event.__dict__
-    event_dict.update({"id" : str(ulid.new())})
-    events.append(event_dict)
-    
+    events_input_processed = []
+
+    for event_obj in events_input:
+        event_dict = event_obj.__dict__
+        event_dict.update({"id" : str(ulid.new())})
+        events_input_processed.append(event_dict)
+
+    events += events_input_processed
 
     with open("Database.json", "w", encoding= "utf-8") as db:
-        json.dump(db_dict, db, indent= 4) #json.dump(datos, file, indent = 4) ident = 4 -> autoformater
+        json.dump(db_dict, db, indent= 4)
+
 
 def Refresh_data_base_logic(action: str,typ: str, key, value: int = None, a: list = None, d: list = None):
     with open('Database.json', 'r', encoding= 'utf-8') as db:
@@ -349,12 +354,17 @@ def Find_Date(event_type: str, start_date: str, end_date: str, resources: list, 
     return (start_date, end_date)
 
     
-def Button_save_func(sd: str, ed: str, ty: str, depe: list, re: list, name: str) -> tuple:
-                validation = Try_event(ty, sd, ed, re, depe)
-                
-                onj = None
+def Button_save_func(events_list) -> tuple:
+                list_obj = []
+                obj = None
+                for event in events_list:
+                    ty = event['ty']
+                    sd = event['sd']
+                    ed = event['ed']
+                    re = event['re']
+                    dp = event['dp']
+                    na = event['na']
 
-                if validation[-1]:
                     if ty == e1:
                         obj = events.Espectaculo_Humoristico(sd, ed, re)
                     elif ty == e2:
@@ -370,43 +380,34 @@ def Button_save_func(sd: str, ed: str, ty: str, depe: list, re: list, name: str)
                     elif ty == e7:
                         obj = events.Temporada_De_Ofertas(sd, ed, re)
                     elif ty == e8:
-                        obj = events.Evento_Personalizado(sd, ed, re, depe, name)
+                        obj = events.Evento_Personalizado(sd, ed, re, dp, na)
                     
-                    Refresh_data_base_event(obj)
-                    return ('success',)
-                    #ESTO VA PARA EL FRONT
-                    #st.success('Evento agregado exitosamente')
-                    # if not stack == 1:
-                    #     start_date = datetime.datetime.strptime(start_date, '%d/%m/%Y') + timedelta(days= periodicity)
-                    #     start_date = start_date.strftime('%d/%m/%Y')
-                    #     end_date = datetime.datetime.strptime(end_date, '%d/%m/%Y') + timedelta(days= periodicity)
-                    #     end_date = end_date.strftime('%d/%m/%Y')
-                
-                elif validation[4] and validation[0][0] and validation[1][0] and validation[2][0] and not validation[3][0]:
-                    message = f"""Para la fecha que requiere su evento no tenemos dsponibles los recursos ({validation[3][1]}).\r\n
-        Le sugerimos que planifique el evento en la siguiente fecha disponible ())"""
-                    return ('suggested', message)
-                    
-                
-                elif not validation[4] or not validation[0][0] or not validation[1][0] or not validation[2][0] or not validation[3][0]:
-                    depen_resources = ''
-                    #Preparando el str de las dependencias de recursos fallidas si es que las hay
-                    for c in validation[2][1]:
-                        for r in validation[2][2]:
-                            depen_resources += f'                                     {c}  <-//-  {r} \n\r'
-                    message = f'''Ha ocurrido un error: 
-                        
+                    list_obj.append(obj)
 
-                        
-            -Recursos minimos necesarios: {validation[0]}\n\r
-            -Coliciones entre recursos: {validation[1]}\n\r
-            -Las dependencias de los recursos fallidas: \n{depen_resources} \n\r
-            -Insuficiencia de recursos globales: {validation[3]} \n\r
-            -Validez de intervalo de fecha: {validation[4]}
-                        '''
-
-                        #Estilizando mensaje
-                    message = message.replace('[', '').replace(']', '').replace("'", '').replace('False', 'Error').replace('True', 'Ok').replace('Ok, ', 'Ok').replace('Error, ', 'Error: ')
-                    return ('error', message)
+                Refresh_data_base_event(list_obj)
+                return True
 
 
+def Try_event_shadow(event: dict, total_resources: dict, all_events: list) -> tuple: #Solo esta pesnado para ejecutarse en lasrepeticiones periodicas de los eventos
+    result = True
+    format = '%d/%m/%Y'
+    mistake = []
+
+    try:
+        for e in all_events:
+            start_date_intersection = date.strptime(e['start_date'], format) <= date.strptime(event['sd'], format) <= date.strptime(e['end_date'], format)
+            end_date_intersection = date.strptime(e['start_date'], format) <= date.strptime(event['ed'], format) <= date.strptime(e['end_date'], format)
+
+            if start_date_intersection or end_date_intersection:
+                for r in e['resources']:
+                    total_resources[r] -= 1
+
+        for re in event['re']:
+            if total_resources[re] <= 0:
+                result = False
+                mistake.append(re)
+
+        return (result, mistake)
+    
+    except:
+        return (False, [None])
