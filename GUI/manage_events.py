@@ -105,6 +105,7 @@ def Administrar():
                 depe = st.multiselect('Que recursos necesita tu evento ?', options= total_resources)
             
             if st.button('Guardar'):
+                st.success('Se presiono el boton de guardar')
                 validation_main = interface_back.Try_event(event_type, start_date, end_date, selected_resources, depe)
                 events_list = []
                 st.session_state.modified_events = []
@@ -123,13 +124,14 @@ def Administrar():
                             'ty': event_type
                         }
                         
-                        
+                        st.success('Va a hacer la primera validacion')
                         if not interface_back.Try_event_shadow(event_attributes, total_resources, old_events)[0]: #El problema se da en esta verificacion
                             nice_dates = interface_back.Find_Date(event_attributes['ty'], event_attributes['sd'], event_attributes['ed'], event_attributes['re'], event_attributes['dp'])
                             st.warning(f'''La fecha en la que se ha intentado crear el evento esta ocupada, insuficiencia de los \n\r
-                                       recursos {interface_back.Try_event_shadow(event_attributes[1])}, le recomendaremos \n\r
+                                       recursos {interface_back.Try_event_shadow(event_attributes, total_resources, old_events)[1]}, le recomendaremos \n\r
                                        la fecha ({nice_dates[0]} --> {nice_dates[1]}) en la cual se ecnuentran disponibles dichos \n\r
                                        recursos''')
+                        
                             
                             event_attributes['sd'] = nice_dates[0]
                             event_attributes['ed'] = nice_dates[1]

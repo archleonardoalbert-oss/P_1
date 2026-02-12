@@ -45,12 +45,7 @@ def main():
             home.Inicio()
             st.toast(f'Ha ocurrido un error:\n\r {e}')
     elif seccion == 'Administrar eventos':
-        try:
             manage_events.Administrar()
-        except Exception as e:
-            st.rerun()
-            manage_events.Administrar()
-            st.toast(f'Ha ocurrido un error:\n\r {e}')
     elif seccion == 'Administrar recursos':
         try:
             manage_resources.Administrar_recursos()

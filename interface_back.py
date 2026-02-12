@@ -41,8 +41,8 @@ class Validation():
         try:
             for event in all_events:
                 #Los intervalos de ocurrencia de los eventos tienen alguna interseccion
-                start_date_intersection = date.strptime(event['start_date'], f) <= date.strptime(self.s_d, f) <= date.strptime(event['end_date'], f)
-                end_date_intersection = date.strptime(event['start_date'], f) <= date.strptime(self.e_d, f) <= date.strptime(event['end_date'], f)
+                start_date_intersection = date.strptime(event['start_date'], f) < date.strptime(self.s_d, f) < date.strptime(event['end_date'], f)
+                end_date_intersection = date.strptime(event['start_date'], f) < date.strptime(self.e_d, f) < date.strptime(event['end_date'], f)
                 if start_date_intersection or end_date_intersection:
                     for resource in event['resources']:
                         all_resources[resource] -= 1 
@@ -393,21 +393,16 @@ def Try_event_shadow(event: dict, total_resources: dict, all_events: list) -> tu
     format = '%d/%m/%Y'
     mistake = []
 
-    try:
-        for e in all_events:
-            start_date_intersection = date.strptime(e['start_date'], format) <= date.strptime(event['sd'], format) <= date.strptime(e['end_date'], format)
-            end_date_intersection = date.strptime(e['start_date'], format) <= date.strptime(event['ed'], format) <= date.strptime(e['end_date'], format)
 
-            if start_date_intersection or end_date_intersection:
-                for r in e['resources']:
-                    total_resources[r] -= 1
-
-        for re in event['re']:
-            if total_resources[re] <= 0:
-                result = False
-                mistake.append(re)
-
-        return (result, mistake)
+    for e in all_events:
+        start_date_intersection = date.strptime(e['start_date'], format) < date.strptime(event['sd'], format) < date.strptime(e['end_date'], format)
+        end_date_intersection = date.strptime(e['start_date'], format) < date.strptime(event['ed'], format) < date.strptime(e['end_date'], format)
+        if start_date_intersection or end_date_intersection:
+            for r in e['resources']:
+                total_resources[r] -= 1
+    for re in event['re']:
+        if total_resources[re] <= 0:
+            result = False
+            mistake.append(re)
+    return (result, mistake)
     
-    except:
-        return (False, [None])
